@@ -236,10 +236,20 @@ section { scroll-margin-top: 5rem; }
 .region a { color: var(--navy); font-weight: 600; }
 
 /* Join */
-.join { background: var(--paper); padding: clamp(3rem, 6vw, 4.5rem) 0; border-top: 1px solid var(--rule); }
-.join .inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem 3rem; }
-.join h2 { color: var(--navy); font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: .5rem; }
-.join p { max-width: 36rem; color: var(--muted); }
+.join { position: relative; overflow: hidden; border-bottom: 1px solid rgb(255 255 255 / .14); background: var(--navy); color: var(--on-navy); padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
+/* Jing Si Hall rising out of the trees at the left edge, as on the sign-up page. Faint on phones so the text stays readable. */
+.join::before {
+    content: ""; position: absolute; inset: 0 auto 0 0; width: 26rem;
+    background: url(img/temple.webp) no-repeat left bottom / auto 125%; opacity: .28;
+}
+.join .inner { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem 3rem; }
+.join h2 { color: #fff; font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: .5rem; }
+.join p { max-width: 36rem; color: var(--on-navy); }
+@media (min-width: 64rem) {
+    .join { min-height: 26rem; display: flex; align-items: center; }
+    .join::before { opacity: 1; }
+    .join .inner { width: 100%; padding-left: max(var(--pad), calc(23rem - (100vw - var(--max)) / 2)); }
+}
 .join-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
 
 /* Footer */
