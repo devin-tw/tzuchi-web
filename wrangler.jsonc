@@ -2,10 +2,13 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tzuchi",
   "compatibility_date": "2026-10-07",
+  "main": "src/worker.js",
   "workers_dev": false,
   "preview_urls": false,
   "assets": {
     "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },

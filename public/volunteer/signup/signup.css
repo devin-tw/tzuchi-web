@@ -1,0 +1,300 @@
+/* Public volunteer sign-up page. Hand-written: no framework, no build step, no JavaScript.
+   System fonts only (no external font requests). Colours and sizes are custom properties
+   so the look can be tuned in one place.
+
+   Palette from docs/moodboard: the navy of the volunteer uniform, the greens of the logo's
+   lotus, and the granite of Jing Si Hall for the neutrals. White does as much work here as
+   it does on the volunteers: the page sits on pale granite, and everything you fill in is white.
+   Green is kept for the lotus, the chosen answer and the button. */
+
+:root {
+    color-scheme: light;
+    --navy: #1c2541;
+    --cloud: #eceef3;
+    --lotus: #167b44;
+    --lotus-dark: #05623d;
+    --lotus-light: #74b259;
+    --lotus-wash: #ebf3ec;
+    --ink: #1a1d27;
+    --muted: #5a5852;
+    --on-navy: #d5d9e4;
+    --rule: #d6d7d1;
+    --field-line: #86887f;
+    --ground: #f2f2ef;
+    --stone: #e7e7e3;
+    --paper: #ffffff;
+    --danger: #b3261e;
+    --danger-wash: #fdeceb;
+    --radius: 6px;
+    --gutter: max(1.25rem, calc((100vw - 70rem) / 2));
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti TC", "Noto Serif TC", "PMingLiU", Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Switching language reloads the page. Browsers that support cross-document view transitions
+   fade between the two instead of flashing white, and the header stays put. */
+@view-transition { navigation: auto; }
+.site-header { view-transition-name: site-header; }
+::view-transition-group(root) { animation-duration: .18s; }
+
+/* What shows when the page is pulled past its ends (macOS and iOS bounce): white above, to
+   continue the header, and stone below, to continue the footer. Pinned to the viewport, so
+   the top half of the screen is always white and the bottom half always stone. */
+html {
+    -webkit-text-size-adjust: 100%;
+    background: linear-gradient(var(--paper) 50%, var(--stone) 50%) fixed;
+}
+
+body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column;
+}
+/* The form that wraps the page must not become a layout box of its own. */
+body > form { display: contents; }
+main { flex: 1 0 auto; display: flex; flex-direction: column; }
+main > .page { flex: 1 0 auto; }
+
+/* Traditional Chinese: its own serif stack, and a little more air between lines. */
+:lang(zh) { --serif: "Songti TC", "Noto Serif TC", "Noto Serif CJK TC", "Source Han Serif TC", "PMingLiU", "MingLiU", serif; }
+:lang(zh) body { line-height: 1.75; }
+:lang(zh) .choice { line-height: 1.6; }
+
+.vh {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.default-submit { position: absolute; width: 1px; height: 1px; padding: 0; border: 0; opacity: 0; pointer-events: none; }
+
+/* Header */
+.site-header { background: var(--paper); border-bottom: 1px solid var(--rule); }
+.site-header .inner {
+    max-width: 72.5rem; margin: 0 auto; padding: .6rem 1.25rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.brand { display: flex; align-items: center; gap: .75rem; min-width: 0; color: inherit; text-decoration: none; }
+.brand img { display: block; height: 2.5rem; width: auto; }
+.brand span { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--navy); white-space: nowrap; }
+/* On a phone the logo and the language switch fill the bar; the name stays for screen readers. */
+@media (max-width: 27rem) {
+    .site-header .inner { padding-block: .5rem; }
+    .brand img { height: 2.25rem; }
+    .brand span {
+        position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+        overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+    }
+}
+
+.lang { display: flex; margin: 0; border: 1px solid var(--field-line); border-radius: var(--radius); overflow: hidden; }
+.lang form, .lang span { margin: 0; display: block; }
+.lang > * + * { border-left: 1px solid var(--field-line); }
+.lang button {
+    display: block; min-height: 2.75rem; padding: 0 1rem;
+    background: var(--paper); border: 0; font: inherit; font-size: .9rem; color: var(--muted); cursor: pointer;
+    white-space: nowrap;
+}
+@media (max-width: 27rem) { .lang button { padding: 0 .8rem; } }
+.lang button:hover { background: var(--cloud); color: var(--navy); }
+.lang button[aria-current="true"] { background: var(--navy); color: #fff; font-weight: 600; }
+
+/* Page: navy intro panel beside the form on wide screens, stacked on phones. */
+.page { display: block; }
+
+.intro { background: var(--navy); color: var(--on-navy); }
+.intro-inner { padding: 2.25rem 1.25rem 2.5rem; }
+.intro h1 {
+    margin: 0 0 1.25rem; max-width: 18em; text-wrap: balance;
+    font-family: var(--serif); font-weight: 700; font-size: clamp(1.85rem, 6.5vw, 2.4rem);
+    line-height: 1.22; color: #fff;
+}
+.intro p { margin: 0 0 .9rem; max-width: 34rem; font-size: .975rem; text-wrap: pretty; }
+.intro p:last-child { margin-bottom: 0; }
+.intro .lead { font-size: 1.1rem; color: #fff; }
+
+/* After a failed submit on a phone, the person has read the intro already; keep the headline
+   and bring the list of problems up near the top. */
+@media (max-width: 63.99rem) {
+    .has-errors .intro p { display: none; }
+    .has-errors .intro h1 { margin-bottom: 0; }
+}
+
+/* Section index: tells people how long the form is and jumps to a part. Wide screens only;
+   on a phone it would only push the form further down. */
+.steps { display: none; }
+.steps ol { margin: 0; padding: 0; list-style: none; counter-reset: index; }
+.steps li { counter-increment: index; border-top: 1px solid rgb(255 255 255 / .18); }
+.steps li:last-child { border-bottom: 1px solid rgb(255 255 255 / .18); }
+.steps a {
+    display: flex; align-items: baseline; gap: .8rem; padding: .7rem 0;
+    color: #fff; text-decoration: none; font-family: var(--serif); font-size: 1.1rem;
+}
+.steps a::before { content: counter(index); min-width: 1ch; font-weight: 700; color: var(--lotus-light); }
+.steps a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.steps a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+@media (min-width: 64rem) {
+    .page { display: grid; grid-template-columns: calc(var(--gutter) + 27rem) minmax(0, 1fr); align-items: stretch; }
+    .intro-inner { padding: 3.5rem 3rem 3.5rem var(--gutter); }
+    .intro h1 { font-size: clamp(2rem, 2.6vw, 2.5rem); }
+    .steps { display: block; margin-top: 2.5rem; }
+    /* Jing Si Hall rising out of the trees at the panel's left edge. Fixed, so it stays put while the form scrolls. */
+    .intro {
+        --temple-h: min(86vh, 58rem);
+        /* The building fills about 36% of the height in width; slide the picture left until it
+           ends short of the text, and let the left edge crop it when the margin is narrow. */
+        background: var(--navy) url('/img/temple.webp') no-repeat
+            min(0px, calc(var(--gutter) + 2rem - var(--temple-h) * .36)) bottom / auto var(--temple-h);
+        background-attachment: fixed;
+    }
+}
+/* Pin the panel only when all of it fits on screen; otherwise its end would be unreachable. */
+@media (min-width: 64rem) and (min-height: 50rem) {
+    .intro-inner { position: sticky; top: 0; }
+}
+
+/* Form */
+.wrap { padding: 1.75rem 1.25rem 4rem; }
+.form-body { max-width: 40rem; }
+@media (min-width: 64rem) {
+    .wrap { padding: 3.5rem max(2rem, calc(var(--gutter) - 1rem)) 5rem 3.5rem; }
+}
+
+.note { margin: 0 0 1.75rem; color: var(--muted); font-size: .9rem; }
+
+/* Sections are open groups divided by a rule; the numeral marks the order of the form. */
+.card, fieldset, .errors { scroll-margin-top: 1.5rem; }
+.card { margin: 0; padding: 1.75rem 0 1.25rem; border-top: 1px solid var(--rule); counter-increment: step; }
+.card h2 {
+    display: flex; align-items: baseline; gap: .7rem;
+    margin: 0 0 1.25rem; font-family: var(--serif); font-size: 1.4rem; line-height: 1.3; color: var(--navy);
+}
+.card h2::before { content: counter(step); font-size: 1.4rem; font-weight: 700; color: var(--lotus); }
+.form-body { counter-reset: step; }
+
+.field { margin-bottom: 1.1rem; }
+.row { display: grid; gap: 1.1rem 1rem; margin-bottom: 1.1rem; }
+.row > .field, .row > fieldset { margin-bottom: 0; }
+@media (min-width: 40rem) {
+    .row.two { grid-template-columns: 1fr 1fr; }
+    .row.three { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.req { color: var(--danger); }
+
+label, legend { display: block; margin-bottom: .4rem; padding: 0; font-weight: 600; font-size: .95rem; line-height: 1.4; }
+
+input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    width: 100%; min-height: 2.9rem; padding: .6rem .8rem;
+    font: inherit; color: inherit; background: var(--paper);
+    border: 1px solid var(--field-line); border-radius: var(--radius);
+}
+textarea { resize: vertical; min-height: 7rem; }
+input:hover, select:hover, textarea:hover { border-color: var(--navy); }
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
+    outline: 3px solid var(--navy); outline-offset: 2px;
+}
+
+fieldset { margin: 0 0 1.35rem; padding: 0; border: 0; min-width: 0; }
+
+/* Choice rows: the whole row is the click target; a chosen row takes the lotus tint and edge. */
+.choices { display: grid; gap: .4rem; }
+@media (min-width: 40rem) {
+    .choices.cols { grid-template-columns: 1fr 1fr; }
+}
+.choice {
+    display: flex; align-items: flex-start; gap: .7rem; margin: 0;
+    padding: .65rem .85rem; font-weight: 400; line-height: 1.45;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); cursor: pointer;
+}
+.choice:hover { border-color: var(--navy); }
+.choice input { flex: none; width: 1.2rem; height: 1.2rem; margin: .15rem 0 0; accent-color: var(--lotus); }
+.choice:has(input:checked) { background: var(--lotus-wash); border-color: var(--lotus); }
+.choice:has(input:focus-visible) { outline: 3px solid var(--navy); outline-offset: 2px; }
+
+.sub { margin-top: .9rem; font-weight: 400; font-size: .9rem; color: var(--muted); }
+
+.errors {
+    margin: 0 0 1.75rem; padding: 1rem 1.15rem;
+    background: var(--danger-wash); color: var(--ink);
+    border: 1px solid #f0b8b4; border-left: 4px solid var(--danger); border-radius: var(--radius); font-size: .95rem;
+}
+.errors h2 { margin: 0 0 .5rem; font-size: 1rem; line-height: 1.4; color: var(--danger); }
+.errors ul { margin: 0; padding-left: 1.2rem; }
+.errors li + li { margin-top: .2rem; }
+.errors a { color: var(--danger); font-weight: 600; text-underline-offset: .15em; }
+.errors a:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+.field-error { margin: .35rem 0 0; color: var(--danger); font-size: .875rem; font-weight: 600; }
+input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] {
+    border-color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger);
+}
+
+.submit-row { padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+.fineprint { margin: 0 0 1.25rem; color: var(--muted); font-size: .9rem; max-width: 34rem; }
+.fineprint a, .doc a, .site-footer a { color: var(--navy); text-underline-offset: .18em; }
+.button {
+    display: block; width: 100%; min-height: 3.1rem; padding: .8rem 2rem;
+    background: var(--lotus); color: #fff; border: 0; border-radius: var(--radius);
+    font: inherit; font-size: 1.05rem; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer;
+}
+.button:hover { background: var(--lotus-dark); }
+.button:active { background: var(--lotus-dark); transform: translateY(1px); }
+@media (min-width: 40rem) { .button { display: inline-block; width: auto; min-width: 15rem; } }
+
+/* Thank-you page */
+.thanks, .doc {
+    max-width: calc(40rem + 2 * var(--gutter)); margin: 0;
+    padding: 4rem max(1.25rem, var(--gutter)) 5rem;
+}
+.thanks > *, .doc > * { max-width: 40rem; }
+.thanks .tick {
+    width: 3.5rem; height: 3.5rem; margin: 0 0 1.5rem; border: 2px solid var(--lotus); border-radius: 50%;
+    display: grid; place-items: center; color: var(--lotus);
+}
+.thanks h1 { margin: 0 0 .75rem; font-family: var(--serif); font-size: 2rem; line-height: 1.25; color: var(--navy); }
+.thanks p { margin: 0 0 1.5rem; color: var(--muted); font-size: 1.05rem; }
+.thanks a { color: var(--navy); font-weight: 600; }
+
+/* Privacy policy */
+.doc { padding-top: 2.5rem; }
+.doc .back { margin: 0 0 2rem; font-size: .95rem; }
+.doc h1 { margin: 0 0 .35rem; font-family: var(--serif); font-size: clamp(1.85rem, 5vw, 2.4rem); line-height: 1.2; color: var(--navy); text-wrap: balance; }
+.doc .updated { margin: 0 0 1.5rem; color: var(--muted); font-size: .9rem; }
+.doc .lead { margin: 0 0 2rem; font-size: 1.1rem; text-wrap: pretty; }
+.doc section { padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid var(--rule); }
+.doc h2 { margin: 0 0 .75rem; font-family: var(--serif); font-size: 1.3rem; line-height: 1.3; color: var(--navy); }
+.doc p { margin: 0 0 .85rem; text-wrap: pretty; }
+.doc ul { margin: 0 0 .85rem; padding-left: 1.25rem; }
+.doc li { margin-bottom: .3rem; }
+
+/* Footer */
+/* Footer: a granite base under the page. */
+.site-footer { border-top: 1px solid var(--rule); background: var(--stone); }
+.site-footer .inner {
+    max-width: 72.5rem; margin: 0 auto; padding: 1.25rem;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1.5rem;
+    color: var(--muted); font-size: .9rem;
+}
+
+/* The honeypot: out of sight and out of the tab order for people, still present for bots. */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* Windows High Contrast drops backgrounds; keep the chosen row visible with a system colour. */
+@media (forced-colors: active) {
+    .choice:has(input:checked) { outline: 2px solid Highlight; }
+    .lang button[aria-current="true"] { text-decoration: underline; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    @view-transition { navigation: none; }
+}
+
+/* Demo copy only */
+.demo-banner { margin: 0; padding: .55rem var(--gutter, 1rem); background: var(--lotus-wash); color: var(--ink); text-align: center; font-size: .9rem; border-bottom: 1px solid var(--rule); }
