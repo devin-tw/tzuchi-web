@@ -109,9 +109,7 @@ p { margin: 0; text-wrap: pretty; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
 .next-class { margin-top: 1.75rem; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / .18); font-size: .95rem; max-width: 32rem; }
 .next-class a { color: #fff; text-underline-offset: .2em; text-decoration-thickness: 1px; }
-.hero-photo { margin: 0; position: relative; order: -1; }
-.hero-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 40%; }
-.hero-photo figcaption { position: absolute; right: 1rem; bottom: .8rem; color: #fff; font-size: .8rem; text-shadow: 0 1px 3px rgb(0 0 0 / .6); }
+.hero-photo { position: relative; order: -1; aspect-ratio: 4 / 3; }
 
 @media (min-width: 64rem) {
     .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: min(44rem, calc(100vh - 7rem)); }
@@ -120,8 +118,7 @@ p { margin: 0; text-wrap: pretty; }
         order: 0; align-content: center;
         padding: 4rem 3rem 4rem max(var(--pad), calc((100vw - var(--max)) / 2 + var(--pad)));
     }
-    .hero-photo { order: 1; }
-    .hero-photo img { height: 100%; aspect-ratio: auto; }
+    .hero-photo { order: 1; aspect-ratio: auto; }
 }
 
 /* Sections */
@@ -270,3 +267,36 @@ section { scroll-margin-top: 5rem; }
 .legal a:hover { text-decoration: underline; }
 
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+
+/* Photos can't be picked up, dragged or highlighted; highlighted text uses the Tzu Chi green. */
+img { -webkit-user-select: none; user-select: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
+::selection { background: var(--lotus); color: #fff; }
+
+/* Hero carousel: native scroll-snap, so it swipes and scrolls without script; carousel.js adds the controls and the slow auto-advance. */
+.carousel { -webkit-user-select: none; user-select: none; }
+.slides {
+    position: absolute; inset: 0; display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain; scrollbar-width: none;
+}
+.slides::-webkit-scrollbar { display: none; }
+.slides:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+.slide { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; margin: 0; position: relative; }
+.slide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; pointer-events: none; }
+.slide::after { content: ""; position: absolute; inset: auto 0 0; height: 6rem; background: linear-gradient(transparent, rgb(0 0 0 / .55)); pointer-events: none; }
+.slide figcaption { position: absolute; z-index: 1; left: 1rem; bottom: .95rem; max-width: calc(100% - 10.5rem); color: #fff; font-size: .85rem; line-height: 1.35; text-shadow: 0 1px 3px rgb(0 0 0 / .6); }
+.carousel-ui { position: absolute; z-index: 2; right: .75rem; bottom: .65rem; display: flex; align-items: center; gap: .4rem; }
+.carousel-ui button {
+    display: grid; place-items: center; width: 2.5rem; height: 2.5rem; padding: 0; border: 1px solid rgb(255 255 255 / .55);
+    border-radius: 50%; background: rgb(28 37 65 / .72); color: #fff; cursor: pointer;
+}
+.carousel-ui button:hover { background: var(--lotus); border-color: var(--lotus); }
+.carousel-ui button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.carousel-ui svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.carousel-ui .pause .play, .carousel-ui .pause[aria-pressed="true"] .stop { display: none; }
+.carousel-ui .pause[aria-pressed="true"] .play { display: block; }
+.carousel-dots { display: none; align-items: center; gap: .15rem; margin-right: .4rem; }
+.carousel-ui .carousel-dots button { width: 1.5rem; height: 1.5rem; border: 0; background: none; }
+.carousel-dots button::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; border: 1px solid #fff; background: transparent; }
+.carousel-dots button:hover::before, .carousel-dots button[aria-current="true"]::before { background: #fff; }
+.carousel-dots button:hover { background: none; }
+@media (min-width: 40rem) { .carousel-dots { display: flex; } }
