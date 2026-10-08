@@ -296,5 +296,5 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
     @view-transition { navigation: none; }
 }
 
-/* Demo copy only */
+/* Notification banner */
 .demo-banner { margin: 0; padding: .55rem var(--gutter, 1rem); background: var(--lotus-wash); color: var(--ink); text-align: center; font-size: .9rem; border-bottom: 1px solid var(--rule); }
