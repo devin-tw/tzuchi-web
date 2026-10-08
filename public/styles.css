@@ -103,8 +103,15 @@ p { margin: 0; text-wrap: pretty; }
 .hero { display: grid; background: var(--navy); color: var(--on-navy); }
 .hero-panel { display: grid; grid-template-columns: auto 1fr; gap: clamp(1.25rem, 3vw, 2.75rem); align-items: start; padding: 2.5rem var(--pad) 3rem; }
 /* Brush calligraphy of the four immeasurables, white on the navy panel. */
-.immeasurables { height: clamp(12rem, 30vw, 26rem); width: auto; align-self: start; margin-top: .35rem; }
-@media (min-width: 64rem) { .immeasurables { align-self: center; margin-top: 0; } }
+.immeasurables { height: clamp(12rem, 30vw, 26rem); width: auto; align-self: center; }
+/* Phones and tablets: the calligraphy stands beside the headline only; the paragraph and buttons run the full width beneath it. */
+@media (max-width: 63.99rem) {
+    .hero-copy { display: contents; }
+    .hero-copy > * { grid-column: 1 / -1; }
+    .immeasurables { grid-column: 1; grid-row: 1; align-self: start; height: calc(clamp(2rem, 4.4vw, 3.4rem) * 3.6); margin-top: .2rem; }
+    .hero h1 { grid-column: 2; grid-row: 1; margin-bottom: 0; }
+}
+@media (min-width: 40rem) and (max-width: 63.99rem) { .immeasurables { height: calc(clamp(2rem, 4.4vw, 3.4rem) * 2.7); } }
 .hero h1 { color: #fff; font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.12; margin-bottom: 1.25rem; max-width: 15em; }
 .hero-copy p { max-width: 32rem; font-size: 1.1rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
