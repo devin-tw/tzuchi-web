@@ -1,0 +1,133 @@
+{
+ "messages": {
+  "en": {
+   "first_name.required": "Please let us know your first name.",
+   "first_name.max": "Your first name is a little long. Please keep it under 255 characters.",
+   "last_name.required": "Please let us know your last name.",
+   "last_name.max": "Your last name is a little long. Please keep it under 255 characters.",
+   "phone.required": "Please share a phone number where we can reach you.",
+   "phone.regex": "Please check your phone number. It should look like 604-555-0123.",
+   "email.required": "Please share your email address.",
+   "email.email": "Please check your email address. It should look like name@example.com.",
+   "email.max": "Your email address is a little long. Please keep it under 255 characters.",
+   "gender.required": "Please choose your gender.",
+   "gender.in": "Please choose your gender.",
+   "city.required": "Please let us know which city you live in.",
+   "city.max": "Your city is a little long. Please keep it under 120 characters.",
+   "province.required": "Please choose your province or territory.",
+   "province.in": "Please choose your province or territory.",
+   "postal_code.required": "Please let us know your postal code.",
+   "postal_code.regex": "Please check your postal code. It should look like V6B 1A1.",
+   "current_status.required": "Please choose the status that fits you best.",
+   "current_status.in": "Please choose the status that fits you best.",
+   "current_status_other.required_if": "Please tell us a little about your current status.",
+   "current_status_other.max": "Please keep this under 255 characters.",
+   "languages.required": "Please choose at least one language you speak.",
+   "languages.min": "Please choose at least one language you speak.",
+   "languages.*.in": "Please choose languages from the list.",
+   "languages_other.required": "Please let us know which other language you speak.",
+   "languages_other.max": "Please keep this under 255 characters.",
+   "interests.required": "Please choose at least one way you'd like to help.",
+   "interests.min": "Please choose at least one way you'd like to help.",
+   "interests.*.in": "Please choose from the list of opportunities.",
+   "programs.*.in": "Please choose from the list of programs.",
+   "message.max": "Your message is a little long. Please keep it under 2,000 characters."
+  },
+  "zh_TW": {
+   "first_name.required": "請告訴我們您的名字。",
+   "first_name.max": "名字稍長了一些，請控制在 255 字以內。",
+   "last_name.required": "請告訴我們您的姓氏。",
+   "last_name.max": "姓氏稍長了一些，請控制在 255 字以內。",
+   "phone.required": "請留下方便聯絡您的電話。",
+   "phone.regex": "請再確認一下電話號碼，格式如 604-555-0123。",
+   "email.required": "請留下您的電子郵件。",
+   "email.email": "請再確認一下電子郵件，格式如 name@example.com。",
+   "email.max": "電子郵件稍長了一些，請控制在 255 字以內。",
+   "gender.required": "請選擇您的性別。",
+   "gender.in": "請選擇您的性別。",
+   "city.required": "請告訴我們您居住的城市。",
+   "city.max": "城市名稱稍長了一些，請控制在 120 字以內。",
+   "province.required": "請選擇您所在的省份或地區。",
+   "province.in": "請選擇您所在的省份或地區。",
+   "postal_code.required": "請告訴我們您的郵遞區號。",
+   "postal_code.regex": "請再確認一下郵遞區號，格式如 V6B 1A1。",
+   "current_status.required": "請選擇最符合您的目前身分。",
+   "current_status.in": "請選擇最符合您的目前身分。",
+   "current_status_other.required_if": "請簡單說明您的目前身分。",
+   "current_status_other.max": "請控制在 255 字以內。",
+   "languages.required": "請至少選擇一種您會說的語言。",
+   "languages.min": "請至少選擇一種您會說的語言。",
+   "languages.*.in": "請從清單中選擇語言。",
+   "languages_other.required": "請告訴我們您會說的其他語言。",
+   "languages_other.max": "請控制在 255 字以內。",
+   "interests.required": "請至少選擇一個您想參與的項目。",
+   "interests.min": "請至少選擇一個您想參與的項目。",
+   "interests.*.in": "請從清單中選擇服務項目。",
+   "programs.*.in": "請從清單中選擇計畫。",
+   "message.max": "留言稍長了一些，請控制在 2,000 字以內。"
+  }
+ },
+ "errors": {
+  "en": {
+   "summary": "Almost there. A few details still need your attention:",
+   "titlePrefix": "Please check: "
+  },
+  "zh_TW": {
+   "summary": "就快完成了，還有幾項需要您補充：",
+   "titlePrefix": "請確認："
+  }
+ },
+ "options": {
+  "provinces": [
+   "AB",
+   "BC",
+   "MB",
+   "NB",
+   "NL",
+   "NT",
+   "NS",
+   "NU",
+   "ON",
+   "PE",
+   "QC",
+   "SK",
+   "YT"
+  ],
+  "genders": [
+   "male",
+   "female"
+  ],
+  "current_statuses": [
+   "student",
+   "employed_full_time",
+   "employed_part_time",
+   "self_employed",
+   "retired",
+   "other"
+  ],
+  "languages": [
+   "english",
+   "french",
+   "mandarin",
+   "cantonese",
+   "other"
+  ],
+  "interests": [
+   "general",
+   "charity",
+   "medical",
+   "education",
+   "humanistic_culture",
+   "environmental_protection",
+   "premises_support",
+   "relief_distribution",
+   "fundraising"
+  ],
+  "programs": [
+   "tima",
+   "tccya",
+   "academy",
+   "training"
+  ]
+ }
+}
