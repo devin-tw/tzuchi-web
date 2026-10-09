@@ -1,3 +1,11 @@
+// Phone menu: close it after a link is chosen or Escape is pressed.
+(() => {
+  const menu = document.querySelector(".menu");
+  if (!menu) return;
+  menu.addEventListener("click", (e) => { if (e.target.closest("nav a")) menu.open = false; });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.open) { menu.open = false; menu.querySelector("summary").focus(); } });
+})();
+
 // Hero photo carousel. Without this file the photos still scroll and swipe (CSS scroll-snap).
 (() => {
   const root = document.querySelector(".carousel");
