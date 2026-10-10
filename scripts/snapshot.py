@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Syncs localized volunteer intake pages and form validation assets."""
-import http.cookiejar, json, os, re, subprocess, sys, urllib.parse, urllib.request
+import http.cookiejar, json, os, re, shutil, subprocess, sys, urllib.parse, urllib.request
 
 APP = "http://127.0.0.1:8001"
 APP_DIR = os.path.expanduser("~/tzu-chi-signup")
@@ -31,9 +31,34 @@ def transform(html, locale):
     html = html.replace(APP, "")
     html = re.sub(r'<div class="brand">(.*?)</div>', r'<a class="brand" href="/">\1</a>', html, count=1, flags=re.S)
     html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n    <meta name="robots" content="noindex, nofollow">', 1)
-    html = html.replace("<body>", '<body>\n<p class="demo-banner" role="note">%s</p>' % BANNER[locale], 1)
+    html = re.sub(r"(<body[^>]*>)", lambda m: m.group(1) + '\n<p class="demo-banner" role="note">%s</p>' % BANNER[locale], html, count=1)
+    html = re.sub(r'\s*<span><button type="submit" formaction="/volunteer/signup/locale/fr".*?</button></span>', "", html, flags=re.S)
+    html = receipts_look(html)
     assert "127.0.0.1" not in html, "app URL left in the snapshot"
     return html
+
+
+def receipts_look(html):
+    """Pages in the sign-in look (thank-you, sign-in, forgot password) use receipts.css and carry the
+    temple as an inline style. The demo's policy forbids inline styles, so the style moves to the css file."""
+    html = re.sub(r"<style>@media \(min-width: 64rem\) \{ \.auth-main \{ background-image: url\(data:image/webp.*?</style>\s*", "", html, flags=re.S)
+    html = re.sub(r"/css/receipts\.css\?v=\d+", "/volunteer/assets/receipts.css", html)
+    html = re.sub(r'<input[^>]*name="_token"[^>]*>', "", html)
+    html = html.replace(APP, "")
+    # The French button has no page behind it in the demo.
+    html = re.sub(r'\s*<form method="POST" action="/locale/fr">.*?</form>', "", html, flags=re.S)
+    return html
+
+
+def inert(html):
+    """Sign-in and password pages are look-only copies: every control is disabled, so nothing can be typed or sent."""
+    html = re.sub(r'<form method="POST" action="[^"]*"', '<form method="get" action="#"', html)
+    html = re.sub(r"<(input|button)\b(?![^>]*\bdisabled)", r"<\1 disabled", html)
+    return html
+
+
+AUTH_PAGES = {"/receipts/login": "receipts/login", "/login": "login", "/forgot-password": "forgot-password"}
+AUTH_BANNER = "Design preview. This page is not connected to anything, and nothing you type is sent or saved."
 
 
 def php_json(expr):
@@ -83,6 +108,22 @@ def main():
             " color: var(--ink); text-align: center; font-size: .9rem; border-bottom: 1px solid var(--rule); }\n")
     with open(os.path.join(ROOT, "public/volunteer/assets/signup.css"), "w") as f:
         f.write(css)
+    receipts = open(os.path.join(APP_DIR, "public/css/receipts.css")).read()
+    receipts += ("\n/* Receipts header layout */\n"
+                 "@media (min-width: 64rem) { .auth-main { background-image: url('/img/receipts-temple.webp'), linear-gradient(to bottom, #fff 30%, #e4e9f2); } }\n"
+                 ".demo-banner { margin: 0; padding: .55rem 1rem; background: var(--lotus-wash); color: var(--ink); text-align: center; font-size: .9rem; border-bottom: 1px solid var(--rule); }\n")
+    with open(os.path.join(ROOT, "public/volunteer/assets/receipts.css"), "w") as f:
+        f.write(receipts)
+    shutil.copyfile(os.path.join(APP_DIR, "public/img/receipts-temple.webp"), os.path.join(ROOT, "public/img/receipts-temple.webp"))
+
+    for route, folder in AUTH_PAGES.items():
+        page = urllib.request.urlopen(APP + route).read().decode()
+        page = inert(receipts_look(page))
+        page = re.sub(r"(<body[^>]*>)", lambda m: m.group(1) + '\n<p class="demo-banner" role="note">%s</p>' % AUTH_BANNER, page, count=1)
+        assert "127.0.0.1" not in page and "localhost" not in page, "app URL left in " + route
+        os.makedirs(os.path.join(ROOT, "public", folder), exist_ok=True)
+        with open(os.path.join(ROOT, "public", folder, "index.html"), "w") as f:
+            f.write(page)
     print("snapshot written")
 
 
