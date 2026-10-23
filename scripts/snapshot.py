@@ -2,8 +2,8 @@
 """Syncs localized volunteer intake pages and form validation assets."""
 import http.cookiejar, json, os, re, shutil, subprocess, sys, urllib.parse, urllib.request
 
-APP = "http://127.0.0.1:8001"
-APP_DIR = os.path.expanduser("~/tzu-chi-signup")
+APP = os.environ.get("APP_URL", "http://127.0.0.1:8000")
+APP_DIR = os.environ.get("APP_DIR", os.path.normpath(os.path.join(ROOT, "..", "portal")))
 SITE = os.environ.get("SITE_URL", "https://tzuchi.devin.tw")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCALES = ["en", "zh_TW"]
@@ -28,6 +28,7 @@ def transform(html, locale):
     html = re.sub(r'(<meta property="og:url" content="|<link rel="canonical" href="|<meta property="og:image" content=")' + re.escape(APP),
                   lambda m: m.group(1) + SITE, html)
     html = re.sub(r"/css/signup\.css\?v=\d+", "/volunteer/assets/signup.css", html)
+    html = re.sub(r"/js/signup\.js\?v=\d+", "/volunteer/assets/signup.js", html)
     html = html.replace(APP, "")
     html = re.sub(r'<div class="brand">(.*?)</div>', r'<a class="brand" href="/">\1</a>', html, count=1, flags=re.S)
     html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n    <meta name="robots" content="noindex, nofollow">', 1)
@@ -108,6 +109,15 @@ def main():
             " color: var(--ink); text-align: center; font-size: .9rem; border-bottom: 1px solid var(--rule); }\n")
     with open(os.path.join(ROOT, "public/volunteer/assets/signup.css"), "w") as f:
         f.write(css)
+    js_src = os.path.join(APP_DIR, "public/js/signup.js")
+    if os.path.isfile(js_src):
+        js = open(js_src).read()
+        os.makedirs(os.path.join(ROOT, "public/volunteer/assets"), exist_ok=True)
+        with open(os.path.join(ROOT, "public/volunteer/assets/signup.js"), "w") as f:
+            f.write(js)
+        os.makedirs(os.path.join(ROOT, "public/js"), exist_ok=True)
+        with open(os.path.join(ROOT, "public/js/signup.js"), "w") as f:
+            f.write(js)
     receipts = open(os.path.join(APP_DIR, "public/css/receipts.css")).read()
     receipts += ("\n/* Receipts header layout */\n"
                  "@media (min-width: 64rem) { .auth-main { background-image: url('/img/receipts-temple.webp'), linear-gradient(to bottom, #fff 30%, #e4e9f2); } }\n"

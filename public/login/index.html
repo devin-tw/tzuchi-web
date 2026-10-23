@@ -3,65 +3,157 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light">
-    <meta name="theme-color" content="#1c2541">
-    
     <meta name="robots" content="noindex, nofollow">
     <title>Sign in · Tzu Chi Canada Volunteer Management</title>
-    <link rel="icon" href="/img/tzu-chi-logo.jpg">
-    <link rel="stylesheet" href="/volunteer/assets/receipts.css">
-                </head>
-<body class="auth">
-<div class="auth-page">
-        <header class="auth-top">
-            <div class="auth-brand">
-                <img src="data:image/webp;base64,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" alt="" width="86" height="46" decoding="sync" >
-                <span>Tzu Chi Canada</span>
-            </div>
-            <nav class="lang" aria-label="Language">
-            <form method="get" action="#">
-                        <button disabled type="submit" lang="en"  aria-current="true" >English</button>
-        </form>
-            <form method="get" action="#">
-                        <button disabled type="submit" lang="zh-Hant" >繁體中文</button>
-        </form>
-    </nav>
-        </header>
+    <link rel="preload" as="style" href="/build/assets/app-CAjySNK_.css" /><link rel="modulepreload" as="script" href="/build/assets/app-BvRk9kiK.js" /><link rel="stylesheet" href="/build/assets/app-CAjySNK_.css" data-navigate-track="reload" /><script type="module" src="/build/assets/app-BvRk9kiK.js" data-navigate-track="reload"></script><!-- Livewire Styles --><style data-livewire-style>[wire\:loading][wire\:loading], [wire\:loading\.delay][wire\:loading\.delay], [wire\:loading\.list-item][wire\:loading\.list-item], [wire\:loading\.inline-block][wire\:loading\.inline-block], [wire\:loading\.inline][wire\:loading\.inline], [wire\:loading\.block][wire\:loading\.block], [wire\:loading\.flex][wire\:loading\.flex], [wire\:loading\.table][wire\:loading\.table], [wire\:loading\.grid][wire\:loading\.grid], [wire\:loading\.inline-flex][wire\:loading\.inline-flex] {display: none;}[wire\:loading\.delay\.none][wire\:loading\.delay\.none], [wire\:loading\.delay\.shortest][wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter][wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short][wire\:loading\.delay\.short], [wire\:loading\.delay\.default][wire\:loading\.delay\.default], [wire\:loading\.delay\.long][wire\:loading\.delay\.long], [wire\:loading\.delay\.longer][wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest][wire\:loading\.delay\.longest] {display: none;}[wire\:offline][wire\:offline] {display: none;}[wire\:dirty]:not(textarea):not(input):not(select) {display: none;}:root {--livewire-progress-bar-color: #2299dd;}[x-cloak="x-cloak"],[x-cloak=""] {display: none !important;}[wire\:cloak="wire:cloak"],[wire\:cloak=""] {display: none !important;}dialog#livewire-error::backdrop {background-color: rgba(0, 0, 0, .6);}</style>
+</head>
+<body class="min-h-screen bg-stone-50 text-stone-900 antialiased">
+<main class="mx-auto flex min-h-dvh w-full max-w-md flex-col justify-center px-5 py-10">
+        <div class="mb-8 flex flex-col items-center text-center">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#213f59] text-white mb-4 size-12" aria-hidden="true">
+    <svg viewBox="0 0 32 32" class="size-7" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M16 25C9 22 5 18 5 12c5 0 8 2 11 6 3-4 6-6 11-6 0 6-4 10-11 13Z" />
+        <path d="M16 23C10 18 10 12 16 6c6 6 6 12 0 17Z" />
+        <path d="M8 26h16" stroke-linecap="round" />
+    </svg>
+</span>
+            <p class="text-lg font-semibold tracking-tight text-stone-900">Tzu Chi Canada</p>
+            <p class="mt-1 text-sm text-stone-500">Volunteer portal</p>
+        </div>
+        <div class="rounded-2xl border border-stone-200 bg-white p-6 shadow-xs sm:p-8">
+            <h1 class="font-medium [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white text-base [&amp;:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&amp;]:mt-2 mb-5" data-flux-heading>Sign in</h1>
 
-        <main class="auth-main" id="main">
-            <section class="auth-card" aria-labelledby="auth-heading">
-                                <p class="eyebrow">Tzu Chi Canada Volunteer Management</p>
-                <h1 id="auth-heading">Sign in</h1>
-                
-                
-                <form method="get" action="#" class="auth-form" novalidate>
+                                            <p class="[:where(&amp;)]:font-normal [:where(&amp;)]:text-sm [:where(&amp;)]:text-zinc-500 [:where(&amp;)]:dark:text-white/70 mb-5" data-flux-text >Sign in to manage volunteer service and records.</p>    <form method="get" action="#" class="space-y-5">
+                <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 block *:data-flux-label:mb-3 [&amp;&gt;[data-flux-label]:has(+[data-flux-description])]:mb-2 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mt-0 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mb-3 [&amp;&gt;[data-flux-description]:first-child:has(+*)]:mb-3 [&amp;&gt;*:not([data-flux-label])+[data-flux-description]]:mt-3" data-flux-field>
+    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    Email
+
+    
+    
+    </ui-label>
         
         
-        <div class="field">
-            <label for="email">Email</label>
-            <input disabled id="email" name="email" type="email" value="" required autofocus
-                   autocomplete="username" spellcheck="false" autocapitalize="none"
-                   >
-        </div>
+        <div class="w-full relative block group/input" data-flux-input>
+            
+            <input
+                type="email"
+                
+                class="w-full border block disabled:shadow-none dark:shadow-none appearance-none text-base sm:text-sm rounded-lg py-2 h-10 leading-[1.375rem] ps-3 pe-3 bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 disabled:text-zinc-500 placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:text-zinc-300 dark:disabled:text-zinc-400 dark:placeholder-zinc-400 dark:disabled:placeholder-zinc-500 shadow-xs border-zinc-200 border-b-zinc-300/80 disabled:border-b-zinc-200 dark:border-white/10 dark:disabled:border-white/5 data-invalid:shadow-none data-invalid:border-red-500 dark:data-invalid:border-red-500 disabled:data-invalid:border-red-500 dark:disabled:data-invalid:border-red-500" id="email" label="Email" required="required" autofocus="autofocus" autocomplete="username"
+                 name="email"                                                                                                 data-flux-control
+                data-flux-group-target
+                                            >
 
-        <div class="field">
-            <div class="field-row">
-                <label for="password">Password</label>
-                <a href="/forgot-password">Forgot your password?</a>
-            </div>
-            <input disabled id="password" name="password" type="password" required autocomplete="current-password">
-        </div>
+                    </div>
 
-        <label class="check">
-            <input disabled type="checkbox" name="remember" value="1" >
-            <span>Keep me signed in</span>
-        </label>
-
-        <button disabled type="submit" class="button button-primary button-block">Sign in</button>
-    </form>
-
-                            </section>
-        </main>
+        
+                <div role="alert" aria-live="polite" aria-atomic="true" class="mt-3 text-sm font-medium text-red-500 dark:text-red-400 hidden" data-flux-error>
     </div>
+</ui-field>
+        <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 block *:data-flux-label:mb-3 [&amp;&gt;[data-flux-label]:has(+[data-flux-description])]:mb-2 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mt-0 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mb-3 [&amp;&gt;[data-flux-description]:first-child:has(+*)]:mb-3 [&amp;&gt;*:not([data-flux-label])+[data-flux-description]]:mt-3" data-flux-field>
+    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    Password
+
+    
+    
+    </ui-label>
+        
+        
+        <div class="w-full relative block group/input" data-flux-input>
+            
+            <input
+                type="password"
+                
+                class="w-full border block disabled:shadow-none dark:shadow-none appearance-none text-base sm:text-sm rounded-lg py-2 h-10 leading-[1.375rem] ps-3 pe-3 bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 disabled:text-zinc-500 placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:text-zinc-300 dark:disabled:text-zinc-400 dark:placeholder-zinc-400 dark:disabled:placeholder-zinc-500 shadow-xs border-zinc-200 border-b-zinc-300/80 disabled:border-b-zinc-200 dark:border-white/10 dark:disabled:border-white/5 data-invalid:shadow-none data-invalid:border-red-500 dark:data-invalid:border-red-500 disabled:data-invalid:border-red-500 dark:disabled:data-invalid:border-red-500" id="password" label="Password" required="required" autocomplete="current-password"
+                 name="password"                                                                                                 data-flux-control
+                data-flux-group-target
+                                            >
+
+                    </div>
+
+        
+                <div role="alert" aria-live="polite" aria-atomic="true" class="mt-3 text-sm font-medium text-red-500 dark:text-red-400 hidden" data-flux-error>
+    </div>
+</ui-field>
+        <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 grid gap-x-3 gap-y-1.5 has-[[data-flux-label]~[data-flux-control]]:grid-cols-[1fr_auto] has-[[data-flux-control]~[data-flux-label]]:grid-cols-[auto_1fr] [&amp;&gt;[data-flux-control]~[data-flux-description]]:row-start-2 [&amp;&gt;[data-flux-control]~[data-flux-description]]:col-start-2 [&amp;&gt;[data-flux-control]~[data-flux-error]]:col-span-2 [&amp;&gt;[data-flux-control]~[data-flux-error]]:mt-1 [&amp;&gt;[data-flux-label]~[data-flux-control]]:row-start-1 [&amp;&gt;[data-flux-label]~[data-flux-control]]:col-start-2" data-flux-field>
+    <ui-checkbox class="flex size-[1.125rem] rounded-[.3rem] mt-px outline-offset-2" value="1" label="Keep me signed in"  name="remember"  data-flux-control data-flux-checkbox>
+        <div class="shrink-0 size-[1.125rem] rounded-[.3rem] flex justify-center items-center text-sm text-zinc-700 dark:text-zinc-800 shadow-xs [ui-checkbox[disabled]_&amp;]:opacity-75 [ui-checkbox[data-checked][disabled]_&amp;]:opacity-50 [ui-checkbox[disabled]_&amp;]:shadow-none [ui-checkbox[data-checked]_&amp;]:shadow-none [ui-checkbox[data-indeterminate]_&amp;]:shadow-none [ui-checkbox[data-checked]:not([data-indeterminate])_&amp;&gt;svg:first-child]:block [ui-checkbox[data-indeterminate]_&amp;&gt;svg:last-child]:block border border-zinc-300 dark:border-white/10 [ui-checkbox[disabled]_&amp;]:border-zinc-200 dark:[ui-checkbox[disabled]_&amp;]:border-white/5 [ui-checkbox[data-checked]_&amp;]:border-transparent [ui-checkbox[data-indeterminate]_&amp;]:border-transparent [ui-checkbox[disabled][data-checked]_&amp;]:border-transparent [ui-checkbox[disabled][data-indeterminate]_&amp;]:border-transparent [print-color-adjust:exact] bg-white dark:bg-white/10 [ui-checkbox[data-checked]_&amp;]:bg-[var(--color-accent)] hover:[ui-checkbox[data-checked]_&amp;]:bg-(--color-accent) focus:[ui-checkbox[data-checked]_&amp;]:bg-(--color-accent) [ui-checkbox[data-indeterminate]_&amp;]:bg-[var(--color-accent)] hover:[ui-checkbox[data-indeterminate]_&amp;]:bg-(--color-accent) focus:[ui-checkbox[data-indeterminate]_&amp;]:bg-(--color-accent)" data-flux-checkbox-indicator>
+    <svg class="shrink-0 [:where(&amp;)]:size-4 hidden text-[var(--color-accent-foreground)]" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+</svg>
+
+            <svg class="shrink-0 [:where(&amp;)]:size-4 hidden text-[var(--color-accent-foreground)]" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M3.75 7.25a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z"/>
+</svg>
+
+        </div>
+    </ui-checkbox>
+
+                    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    Keep me signed in
+
+    
+    
+    </ui-label>
+        
+        
+                    <div role="alert" aria-live="polite" aria-atomic="true" class="mt-3 text-sm font-medium text-red-500 dark:text-red-400 hidden" data-flux-error>
+    </div>
+</ui-field>
+
+        <button type="submit" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 ps-4 pe-4 inline-flex  bg-[var(--color-accent)] hover:bg-[color-mix(in_oklab,_var(--color-accent),_transparent_10%)] text-[var(--color-accent-foreground)] border border-black/10 dark:border-0 shadow-[inset_0px_1px_--theme(--color-white/.2)] [[data-flux-button-group]_&amp;]:border-e-0 [:is([data-flux-button-group]&gt;&amp;:last-child,_[data-flux-button-group]_:last-child&gt;&amp;)]:border-e-[1px] dark:[:is([data-flux-button-group]&gt;&amp;:last-child,_[data-flux-button-group]_:last-child&gt;&amp;)]:border-e-0 [:is([data-flux-button-group]&gt;&amp;:not(:first-child),_[data-flux-button-group]_:not(:first-child)&gt;&amp;)]:border-s-[1px]! [:is([data-flux-button-group]&gt;&amp;:not(:first-child),_[data-flux-button-group]_:not(:first-child)&gt;&amp;)]:border-s-[color-mix(in_srgb,var(--color-accent-foreground),transparent_85%)] *:transition-opacity [&amp;[disabled]&gt;:not([data-flux-loading-indicator])]:opacity-0 [&amp;[disabled]&gt;[data-flux-loading-indicator]]:opacity-100 [&amp;[disabled]]:pointer-events-none   w-full" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
+                <svg class="shrink-0 [:where(&amp;)]:size-4 animate-spin" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true" data-slot="icon">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+</svg>
+                    </div>
+        
+        
+                    
+            
+            <span>Sign in</span>
+    </button>
+        <a href="/forgot-password" class="block text-center text-sm text-stone-500 underline-offset-4 hover:text-stone-900 hover:underline">Forgot your password?</a>
+    </form>
+        </div>
+        <div class="mt-6 flex justify-center"><div class="flex shrink-0 items-center gap-1" role="group" aria-label="Language">
+            <form method="get" action="#">
+                        <button type="submit" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-6 text-xs rounded-md gap-1 ps-2 pe-2 inline-flex  bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20 text-zinc-800 dark:text-white   [[data-flux-button-group]_&amp;]:border-e [:is([data-flux-button-group]&gt;&amp;:last-child,_[data-flux-button-group]_:last-child&gt;&amp;)]:border-e-0 [[data-flux-button-group]_&amp;]:border-zinc-200/80 dark:[[data-flux-button-group]_&amp;]:border-zinc-900/50 *:transition-opacity [&amp;[disabled]&gt;:not([data-flux-loading-indicator])]:opacity-0 [&amp;[disabled]&gt;[data-flux-loading-indicator]]:opacity-100 [&amp;[disabled]]:pointer-events-none" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target" aria-current="true">
+        <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
+                <svg class="shrink-0 [:where(&amp;)]:size-4 animate-spin" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true" data-slot="icon">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+</svg>
+                    </div>
+        
+        
+                    
+            
+            <span>English</span>
+    </button>
+        </form>
+            <form method="get" action="#">
+                        <button type="submit" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-6 text-xs rounded-md gap-1 ps-2 pe-2 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white    *:transition-opacity [&amp;[disabled]&gt;:not([data-flux-loading-indicator])]:opacity-0 [&amp;[disabled]&gt;[data-flux-loading-indicator]]:opacity-100 [&amp;[disabled]]:pointer-events-none" data-flux-button="data-flux-button">
+        <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
+                <svg class="shrink-0 [:where(&amp;)]:size-4 animate-spin" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true" data-slot="icon">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+</svg>
+                    </div>
+        
+        
+                    
+            
+            <span>繁體中文</span>
+    </button>
+        </form>
+    </div>
+</div>
+        <p class="mt-5 text-center text-xs text-stone-500">Serving our communities with compassion.</p>
+    </main>
+    <!-- Livewire Scripts -->
+<script src="/livewire-e9a664df/livewire.js?id=8ea5922c" data-module-url="/livewire-e9a664df" data-update-uri="/livewire-e9a664df/update" data-navigate-once="true"></script>
+    <script src="/flux/flux.js?id=c60bf509" data-navigate-once></script>
+
 </body>
 </html>

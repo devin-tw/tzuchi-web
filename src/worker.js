@@ -21,8 +21,8 @@ const TEXT = ["first_name", "last_name", "phone", "email", "city", "postal_code"
 const ARRAYS = ["languages", "interests", "programs"];
 // Fields the error summary can link to (same list as the app's form view).
 const ANCHORS = ["first_name", "last_name", "phone", "email", "gender", "city", "province", "postal_code",
-  "current_status", "current_status_other", "languages", "languages_other", "interests", "programs",
-  "message", "newsletter_opt_in"];
+  "current_status", "current_status_other", "languages", "languages_other", "backgrounds", "availability",
+  "interests", "programs", "message", "newsletter_opt_in"];
 
 const HTML_HEADERS = {
   "content-type": "text/html; charset=utf-8",
@@ -31,7 +31,7 @@ const HTML_HEADERS = {
   "x-content-type-options": "nosniff",
   "referrer-policy": "strict-origin-when-cross-origin",
   "content-security-policy":
-    "default-src 'none'; img-src 'self' data:; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+    "default-src 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
 };
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -71,9 +71,25 @@ const clearFlash = "demo_flash=; Path=/volunteer; Max-Age=0; SameSite=Lax; Secur
 
 function readAnswers(form) {
   const o = {};
-  for (const f of [...TEXT, "gender", "province", "current_status", "message"]) o[f] = String(form.get(f) ?? "").trim();
+  for (const f of [...TEXT, "gender", "province", "current_status", "message", "step"]) o[f] = String(form.get(f) ?? "").trim();
   for (const f of ARRAYS) o[f] = form.getAll(f + "[]").map(String);
   o.newsletter_opt_in = form.get("newsletter_opt_in") ? "1" : "";
+  o.availability = form.getAll("availability[]").map(String);
+  o.backgrounds = [];
+  for (let i = 0; i < 5; i++) {
+    const prof = form.get(`backgrounds[${i}][profession]`);
+    const org = form.get(`backgrounds[${i}][organization]`);
+    const exp = form.get(`backgrounds[${i}][experience]`);
+    const cert = form.get(`backgrounds[${i}][certifications]`);
+    if (prof || org || exp || cert) {
+      o.backgrounds.push({
+        profession: String(prof ?? "").trim(),
+        organization: String(org ?? "").trim(),
+        experience: String(exp ?? "").trim(),
+        certifications: String(cert ?? "").trim(),
+      });
+    }
+  }
   return o;
 }
 
@@ -154,6 +170,54 @@ function renderForm(html, locale, old, errors) {
   }
   rw.on("input#newsletter_opt_in", { element(el) { if (old.newsletter_opt_in) el.setAttribute("checked", ""); } });
 
+  const SECTIONS = ['about', 'where', 'background', 'availability', 'help', 'review'];
+  const STEP_OF_FIELD = {
+    first_name: 'about', last_name: 'about', phone: 'about', email: 'about', gender: 'about',
+    city: 'where', province: 'where', postal_code: 'where',
+    current_status: 'background', current_status_other: 'background', languages: 'background', languages_other: 'background',
+    backgrounds: 'availability', availability: 'availability',
+    interests: 'help', programs: 'help', message: 'help', newsletter_opt_in: 'help',
+  };
+  let activeStep = old.step || "about";
+  if (has) {
+    for (const s of SECTIONS) {
+      if (Object.keys(errors).some((f) => (STEP_OF_FIELD[f] || "review") === s)) {
+        activeStep = s;
+        break;
+      }
+    }
+  }
+  rw.on('[data-wizard]', { element(el) { el.setAttribute('data-active', activeStep); } });
+  rw.on('[data-step-input]', { element(el) { el.setAttribute('value', activeStep); } });
+
+  for (const v of (old.availability || [])) {
+    rw.on(`input[name="availability[]"][value="${v}"]`, { element(el) { el.setAttribute("checked", ""); } });
+  }
+
+  if (old.backgrounds && old.backgrounds[0]) {
+    const b0 = old.backgrounds[0];
+    if (b0.profession) {
+      rw.on(`select[name="backgrounds[0][profession]"] option`, {
+        element(el) { if (el.getAttribute("value") === b0.profession) el.setAttribute("selected", ""); }
+      });
+    }
+    if (b0.organization) {
+      rw.on('input[name="backgrounds[0][organization]"]', {
+        element(el) { el.setAttribute("value", b0.organization); }
+      });
+    }
+    if (b0.experience) {
+      rw.on(`select[name="backgrounds[0][experience]"] option`, {
+        element(el) { if (el.getAttribute("value") === b0.experience) el.setAttribute("selected", ""); }
+      });
+    }
+    if (b0.certifications) {
+      rw.on('input[name="backgrounds[0][certifications]"]', {
+        element(el) { el.setAttribute("value", b0.certifications); }
+      });
+    }
+  }
+
   const groups = { gender: ["gender"], current_status: ["current_status", "current_status_other"], languages: ["languages", "languages_other"], interests: ["interests"], programs: ["programs"] };
   for (const [id, fields] of Object.entries(groups)) {
     rw.on(`fieldset#${id}`, {
@@ -219,5 +283,5 @@ export default {
 const blank = () => ({
   first_name: "", last_name: "", phone: "", email: "", city: "", postal_code: "", current_status_other: "",
   languages_other: "", gender: "", province: "", current_status: "", message: "", newsletter_opt_in: "",
-  languages: [], interests: [], programs: [],
+  languages: [], interests: [], programs: [], backgrounds: [], availability: [], step: "about",
 });

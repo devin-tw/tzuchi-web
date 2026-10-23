@@ -31,6 +31,12 @@
    "interests.min": "Please choose at least one way you'd like to help.",
    "interests.*.in": "Please choose from the list of opportunities.",
    "programs.*.in": "Please choose from the list of programs.",
+   "backgrounds.max": "You can add up to 5 backgrounds.",
+   "backgrounds.*.profession.in": "Please choose a profession from the list.",
+   "backgrounds.*.organization.max": "Please keep the organization name under 160 characters.",
+   "backgrounds.*.experience.in": "Please choose your years of experience from the list.",
+   "backgrounds.*.certifications.max": "Please keep this under 255 characters.",
+   "availability.*.in": "Please choose times from the grid.",
    "message.max": "Your message is a little long. Please keep it under 2,000 characters."
   },
   "zh_TW": {
@@ -64,6 +70,12 @@
    "interests.min": "請至少選擇一個您想參與的項目。",
    "interests.*.in": "請從清單中選擇服務項目。",
    "programs.*.in": "請從清單中選擇計畫。",
+   "backgrounds.max": "最多可新增 5 項背景。",
+   "backgrounds.*.profession.in": "請從清單中選擇職業。",
+   "backgrounds.*.organization.max": "機構名稱請控制在 160 字以內。",
+   "backgrounds.*.experience.in": "請從清單中選擇經驗年資。",
+   "backgrounds.*.certifications.max": "請控制在 255 字以內。",
+   "availability.*.in": "請從表格中選擇時段。",
    "message.max": "留言稍長了一些，請控制在 2,000 字以內。"
   }
  },
@@ -128,6 +140,39 @@
    "tccya",
    "academy",
    "training"
+  ],
+  "professions": [
+   "healthcare",
+   "education",
+   "technology",
+   "engineering",
+   "business",
+   "legal",
+   "arts_media",
+   "trades",
+   "hospitality",
+   "social_services",
+   "other"
+  ],
+  "experience_levels": [
+   "under_1",
+   "1_3",
+   "4_10",
+   "over_10"
+  ],
+  "days": [
+   "monday",
+   "tuesday",
+   "wednesday",
+   "thursday",
+   "friday",
+   "saturday",
+   "sunday"
+  ],
+  "slots": [
+   "morning",
+   "afternoon",
+   "evening"
   ]
  }
 }
