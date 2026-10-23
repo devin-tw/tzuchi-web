@@ -19,6 +19,15 @@
     <link rel="icon" href="/img/tzu-chi-logo.jpg">
     
     <link rel="stylesheet" href="/volunteer/assets/signup.css">
+    
+    <noscript><style>
+        .step { display: block !important; }
+        .step + .step { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid #d6d7d1; }
+        .js-only { display: none !important; }
+        .progress, .progress-text, .step-nav .back, .step-nav .next, [data-bg-add], [data-bg-remove] { display: none !important; }
+        .step-nav .submit { display: inline-flex !important; }
+    </style></noscript>
+    <script src="/volunteer/assets/signup.js" defer></script>
 </head>
 <body>
 <p class="demo-banner" role="note">示範頁面。您在此填寫的內容不會被送出或儲存。</p>
@@ -45,49 +54,129 @@
             <h1>加入我們，將光明與溫暖帶進社會的幽暗角落！</h1>
             <p class="lead">今天，已有一千多位慈濟志工為改善社會貢獻心力，他們是加拿大慈濟生命、精神與工作不可或缺的一部分。</p>
             <p>無論您的年齡、種族、宗教或職業，我們誠摯歡迎您加入志工行列，一起推動慈善與善念的良性循環。</p>
-            <p>為了讓我們能將您的志願服務與目前的實際需求做最好的配合，敬請詳細且正確地填寫以下申請表。</p>
 
             <nav class="steps" aria-label="表單各部分">
                 <ol>
-                                            <li><a href="#about">關於您</a></li>
-                                            <li><a href="#where">您的所在地</a></li>
-                                            <li><a href="#background">更多關於您</a></li>
-                                            <li><a href="#help">您想如何參與</a></li>
+                                            <li class="is-current" data-step-link="about">
+                            <a href="#about"  aria-current="step" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">1</span>
+                                <span class="name">關於您</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="where">
+                            <a href="#where" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">2</span>
+                                <span class="name">您的所在地</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="background">
+                            <a href="#background" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">3</span>
+                                <span class="name">背景資料</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="availability">
+                            <a href="#availability" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">4</span>
+                                <span class="name">可服務時間</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="help">
+                            <a href="#help" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">5</span>
+                                <span class="name">您想如何參與</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="review">
+                            <a href="#review" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">6</span>
+                                <span class="name">檢查並送出</span>
+                            </a>
+                        </li>
                                     </ol>
             </nav>
         </div>
     </section>
 
     <div class="wrap">
-    <div class="form-body">
+    <div class="form-body wizard" data-wizard data-active="about" data-steps="about,where,background,availability,help,review">
         
+        <input type="hidden" name="step" value="about" data-step-input>
         
 
+        <div class="sheet">
+        <ol class="progress" data-progress aria-label="表單各部分">
+                            <li class="is-current" data-progress-step="about"  aria-current="step" >
+                    <a href="#about">
+                        <span class="dot" aria-hidden="true">1</span>
+                        <span class="lbl">關於您</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="where" >
+                    <a href="#where">
+                        <span class="dot" aria-hidden="true">2</span>
+                        <span class="lbl">您的所在地</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="background" >
+                    <a href="#background">
+                        <span class="dot" aria-hidden="true">3</span>
+                        <span class="lbl">背景資料</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="availability" >
+                    <a href="#availability">
+                        <span class="dot" aria-hidden="true">4</span>
+                        <span class="lbl">可服務時間</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="help" >
+                    <a href="#help">
+                        <span class="dot" aria-hidden="true">5</span>
+                        <span class="lbl">您想如何參與</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="review" >
+                    <a href="#review">
+                        <span class="dot" aria-hidden="true">6</span>
+                        <span class="lbl">檢查並送出</span>
+                    </a>
+                </li>
+                    </ol>
+        <p class="progress-text" aria-hidden="true" data-progress-text data-pattern="第 :current 步，共 :total 步">第 1 步，共 6 步</p>
+
         
+        <section class="step is-active" id="about" data-step="about" aria-labelledby="about-title">
+        <h2 id="about-title" tabindex="-1">步驟 1 · 關於您</h2>
+        <p class="step-lead">為了讓我們能將您的志願服務與目前的實際需求做最好的配合，敬請詳細且正確地填寫申請表。</p>
         <p class="note">請填寫標示 * 的欄位。</p>
 
-        <section class="card" id="about" aria-labelledby="about-title">
-        <h2 id="about-title">關於您</h2>
         <div class="row two">
-            <div class="field">
+            <div class="field" data-review>
                 <label for="first_name">名字<span class="req" aria-hidden="true"> *</span></label>
-                <input id="first_name" name="first_name" type="text" value="" required autocomplete="given-name" autocapitalize="words" aria-invalid="false" >
+                <input id="first_name" name="first_name" type="text" value="" required data-msg="請告訴我們您的名字。" autocomplete="given-name" autocapitalize="words" aria-invalid="false" >
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="last_name">姓氏<span class="req" aria-hidden="true"> *</span></label>
-                <input id="last_name" name="last_name" type="text" value="" required autocomplete="family-name" autocapitalize="words" aria-invalid="false" >
+                <input id="last_name" name="last_name" type="text" value="" required data-msg="請告訴我們您的姓氏。" autocomplete="family-name" autocapitalize="words" aria-invalid="false" >
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="phone">電話<span class="req" aria-hidden="true"> *</span></label>
-                <input id="phone" name="phone" type="tel" inputmode="tel" value="" required autocomplete="tel" aria-invalid="false" >
+                <input id="phone" name="phone" type="tel" inputmode="tel" value="" required data-msg="請留下方便聯絡您的電話。" autocomplete="tel" aria-invalid="false" >
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="email">電子郵件<span class="req" aria-hidden="true"> *</span></label>
-                <input id="email" name="email" type="email" inputmode="email" value="" required autocomplete="email" autocapitalize="off" spellcheck="false" aria-invalid="false" >
+                <input id="email" name="email" type="email" inputmode="email" value="" required data-msg="請留下您的電子郵件。" autocomplete="email" autocapitalize="off" spellcheck="false" aria-invalid="false" >
                             </div>
         </div>
 
-        <fieldset id="gender" >
+        <fieldset id="gender" data-review data-required-group data-msg="請選擇您的性別。" >
             <legend>性別<span class="req" aria-hidden="true"> *</span></legend>
             <div class="choices cols">
                                     <label class="choice"><input type="radio" name="gender" value="male"  required> 男</label>
@@ -96,16 +185,18 @@
                     </fieldset>
         </section>
 
-        <section class="card" id="where" aria-labelledby="where-title">
-        <h2 id="where-title">您的所在地</h2>
+        <section class="step " id="where" data-step="where" aria-labelledby="where-title">
+        <h2 id="where-title" tabindex="-1">步驟 2 · 您的所在地</h2>
+        <p class="step-lead">請告訴我們您住在哪裡，讓我們為您聯繫最近的慈濟社區。</p>
+
         <div class="row three">
-            <div class="field">
+            <div class="field" data-review>
                 <label for="city">城市<span class="req" aria-hidden="true"> *</span></label>
-                <input id="city" name="city" type="text" value="" required autocomplete="address-level2" autocapitalize="words" aria-invalid="false" >
+                <input id="city" name="city" type="text" value="" required data-msg="請告訴我們您居住的城市。" autocomplete="address-level2" autocapitalize="words" aria-invalid="false" >
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="province">省份<span class="req" aria-hidden="true"> *</span></label>
-                <select id="province" name="province" required autocomplete="address-level1" aria-invalid="false" >
+                <select id="province" name="province" required data-msg="請選擇您所在的省份或地區。" autocomplete="address-level1" aria-invalid="false" >
                     <option value="">- 請選擇 -</option>
                                             <option value="AB" >亞伯達省</option>
                                             <option value="BC" >卑詩省</option>
@@ -122,16 +213,18 @@
                                             <option value="YT" >育空地區</option>
                                     </select>
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="postal_code">郵遞區號<span class="req" aria-hidden="true"> *</span></label>
-                <input id="postal_code" name="postal_code" type="text" value="" required autocomplete="postal-code" autocapitalize="characters" spellcheck="false" aria-invalid="false" >
+                <input id="postal_code" name="postal_code" type="text" value="" required data-msg="請告訴我們您的郵遞區號。" autocomplete="postal-code" autocapitalize="characters" spellcheck="false" aria-invalid="false" >
                             </div>
         </div>
         </section>
 
-        <section class="card" id="background" aria-labelledby="background-title">
-        <h2 id="background-title">更多關於您</h2>
-            <fieldset id="current_status" >
+        <section class="step " id="background" data-step="background" aria-labelledby="background-title">
+        <h2 id="background-title" tabindex="-1">步驟 3 · 背景資料</h2>
+        <p class="step-lead">簡單說明您目前的身分，以及您會說的語言。</p>
+
+            <fieldset id="current_status" data-review data-required-group data-msg="請選擇最符合您的目前身分。" >
                 <legend>目前身分<span class="req" aria-hidden="true"> *</span></legend>
                 <div class="choices cols">
                                     <label class="choice"><input type="radio" name="current_status" value="student"  required> 學生</label>
@@ -145,7 +238,7 @@
                 <input id="current_status_other" name="current_status_other" type="text" value="" aria-invalid="false" >
                                             </fieldset>
 
-            <fieldset id="languages" >
+            <fieldset id="languages" data-review data-required-group data-msg="請至少選擇一種您會說的語言。" >
                 <legend>語言<span class="req" aria-hidden="true"> *</span></legend>
                 <div class="choices cols">
                                     <label class="choice"><input type="checkbox" name="languages[]" value="english" > 英語</label>
@@ -159,9 +252,287 @@
                                             </fieldset>
         </section>
 
-        <section class="card" id="help" aria-labelledby="help-title">
-        <h2 id="help-title">您想如何參與</h2>
-        <fieldset id="interests" >
+        <section class="step " id="availability" data-step="availability" aria-labelledby="availability-title">
+        <h2 id="availability-title" tabindex="-1">步驟 4 · 可服務時間與專業背景</h2>
+        <p class="step-lead">請告訴我們您的專業背景，以及您通常可以參與志工服務的時間，讓我們為您配對合適的機會。</p>
+
+        <div class="panel" id="backgrounds" data-bg-list data-max="5" >
+            <div class="panel-head">
+                <span class="panel-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></span>
+                <h3>專業背景 <span class="optional">(選填)</span></h3>
+            </div>
+            <div class="panel-body">
+                                <div data-bg-rows>
+                                            <div class="bg-row" data-bg-row data-review data-review-type="background" data-review-label="背景 1">
+    <div class="bg-row-head"  hidden >
+        <span class="bg-row-title" data-bg-title data-pattern="背景 :number">背景 1</span>
+        <button type="button" class="link-button" data-bg-remove>移除</button>
+    </div>
+    <div class="row three">
+        <div class="field">
+            <label for="backgrounds-0-profession">職業／專長</label>
+            <select id="backgrounds-0-profession" name="backgrounds[0][profession]" aria-invalid="false" >
+                <option value="">- 請選擇 -</option>
+                                    <option value="healthcare" >醫療保健</option>
+                                    <option value="education" >教育與培訓</option>
+                                    <option value="technology" >資訊科技</option>
+                                    <option value="engineering" >工程與營建</option>
+                                    <option value="business" >商業、金融與行政</option>
+                                    <option value="legal" >法律與公共服務</option>
+                                    <option value="arts_media" >藝術、媒體與傳播</option>
+                                    <option value="trades" >技術工與製造業</option>
+                                    <option value="hospitality" >餐飲、旅宿與零售</option>
+                                    <option value="social_services" >社會與社區服務</option>
+                                    <option value="other" >其他</option>
+                            </select>
+                    </div>
+        <div class="field">
+            <label for="backgrounds-0-organization">機構／公司</label>
+            <input id="backgrounds-0-organization" name="backgrounds[0][organization]" type="text" value="" maxlength="160" autocomplete="organization" placeholder="例如：公司或機構名稱" aria-invalid="false" >
+                    </div>
+        <div class="field">
+            <label for="backgrounds-0-experience">經驗年資</label>
+            <select id="backgrounds-0-experience" name="backgrounds[0][experience]" aria-invalid="false" >
+                <option value="">- 請選擇 -</option>
+                                    <option value="under_1" >不到 1 年</option>
+                                    <option value="1_3" >1–3 年</option>
+                                    <option value="4_10" >4–10 年</option>
+                                    <option value="over_10" >10 年以上</option>
+                            </select>
+                    </div>
+    </div>
+    <div class="field">
+        <label for="backgrounds-0-certifications">證照、執照或相關訓練（選填）</label>
+        <input id="backgrounds-0-certifications" name="backgrounds[0][certifications]" type="text" value="" maxlength="255" placeholder="例如：急救、教師資格、食品安全等" aria-invalid="false" >
+            </div>
+</div>
+                                    </div>
+                <template data-bg-template>
+                    <div class="bg-row" data-bg-row data-review data-review-type="background" data-review-label="背景 __NUMBER__">
+    <div class="bg-row-head" >
+        <span class="bg-row-title" data-bg-title data-pattern="背景 :number">背景 __NUMBER__</span>
+        <button type="button" class="link-button" data-bg-remove>移除</button>
+    </div>
+    <div class="row three">
+        <div class="field">
+            <label for="backgrounds-__INDEX__-profession">職業／專長</label>
+            <select id="backgrounds-__INDEX__-profession" name="backgrounds[__INDEX__][profession]" aria-invalid="false" >
+                <option value="">- 請選擇 -</option>
+                                    <option value="healthcare" >醫療保健</option>
+                                    <option value="education" >教育與培訓</option>
+                                    <option value="technology" >資訊科技</option>
+                                    <option value="engineering" >工程與營建</option>
+                                    <option value="business" >商業、金融與行政</option>
+                                    <option value="legal" >法律與公共服務</option>
+                                    <option value="arts_media" >藝術、媒體與傳播</option>
+                                    <option value="trades" >技術工與製造業</option>
+                                    <option value="hospitality" >餐飲、旅宿與零售</option>
+                                    <option value="social_services" >社會與社區服務</option>
+                                    <option value="other" >其他</option>
+                            </select>
+                    </div>
+        <div class="field">
+            <label for="backgrounds-__INDEX__-organization">機構／公司</label>
+            <input id="backgrounds-__INDEX__-organization" name="backgrounds[__INDEX__][organization]" type="text" value="" maxlength="160" autocomplete="organization" placeholder="例如：公司或機構名稱" aria-invalid="false" >
+                    </div>
+        <div class="field">
+            <label for="backgrounds-__INDEX__-experience">經驗年資</label>
+            <select id="backgrounds-__INDEX__-experience" name="backgrounds[__INDEX__][experience]" aria-invalid="false" >
+                <option value="">- 請選擇 -</option>
+                                    <option value="under_1" >不到 1 年</option>
+                                    <option value="1_3" >1–3 年</option>
+                                    <option value="4_10" >4–10 年</option>
+                                    <option value="over_10" >10 年以上</option>
+                            </select>
+                    </div>
+    </div>
+    <div class="field">
+        <label for="backgrounds-__INDEX__-certifications">證照、執照或相關訓練（選填）</label>
+        <input id="backgrounds-__INDEX__-certifications" name="backgrounds[__INDEX__][certifications]" type="text" value="" maxlength="255" placeholder="例如：急救、教師資格、食品安全等" aria-invalid="false" >
+            </div>
+</div>
+                </template>
+                <button type="button" class="button-outline" data-bg-add><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> 新增另一項背景</button>
+            </div>
+        </div>
+
+        <div class="panel" id="availability-grid" role="group" aria-labelledby="availability-grid-title" data-review data-review-type="availability" data-review-label="可服務時間">
+            <div class="panel-head">
+                <span class="panel-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
+                <span class="panel-heading">
+                    <span class="panel-title" id="availability-grid-title">可服務時間</span>
+                    <span class="panel-hint">請勾選您通常可以參與志工服務的時段，可複選。</span>
+                </span>
+            </div>
+            <div class="grid-scroll">
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th scope="col" class="day-col">星期</th>
+                                                    <th scope="col">上午<span class="times">(8:00–12:00)</span></th>
+                                                    <th scope="col">下午<span class="times">(12:00–17:00)</span></th>
+                                                    <th scope="col">晚上<span class="times">(17:00–21:00)</span></th>
+                                            </tr>
+                </thead>
+                <tbody>
+                                            <tr>
+                            <th scope="row">星期一</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="monday_morning" data-day="星期一" data-slot="上午" >
+                                        <span class="vh">星期一, 上午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="monday_afternoon" data-day="星期一" data-slot="下午" >
+                                        <span class="vh">星期一, 下午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="monday_evening" data-day="星期一" data-slot="晚上" >
+                                        <span class="vh">星期一, 晚上</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">星期二</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="tuesday_morning" data-day="星期二" data-slot="上午" >
+                                        <span class="vh">星期二, 上午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="tuesday_afternoon" data-day="星期二" data-slot="下午" >
+                                        <span class="vh">星期二, 下午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="tuesday_evening" data-day="星期二" data-slot="晚上" >
+                                        <span class="vh">星期二, 晚上</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">星期三</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="wednesday_morning" data-day="星期三" data-slot="上午" >
+                                        <span class="vh">星期三, 上午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="wednesday_afternoon" data-day="星期三" data-slot="下午" >
+                                        <span class="vh">星期三, 下午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="wednesday_evening" data-day="星期三" data-slot="晚上" >
+                                        <span class="vh">星期三, 晚上</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">星期四</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="thursday_morning" data-day="星期四" data-slot="上午" >
+                                        <span class="vh">星期四, 上午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="thursday_afternoon" data-day="星期四" data-slot="下午" >
+                                        <span class="vh">星期四, 下午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="thursday_evening" data-day="星期四" data-slot="晚上" >
+                                        <span class="vh">星期四, 晚上</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">星期五</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="friday_morning" data-day="星期五" data-slot="上午" >
+                                        <span class="vh">星期五, 上午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="friday_afternoon" data-day="星期五" data-slot="下午" >
+                                        <span class="vh">星期五, 下午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="friday_evening" data-day="星期五" data-slot="晚上" >
+                                        <span class="vh">星期五, 晚上</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">星期六</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="saturday_morning" data-day="星期六" data-slot="上午" >
+                                        <span class="vh">星期六, 上午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="saturday_afternoon" data-day="星期六" data-slot="下午" >
+                                        <span class="vh">星期六, 下午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="saturday_evening" data-day="星期六" data-slot="晚上" >
+                                        <span class="vh">星期六, 晚上</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">星期日</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="sunday_morning" data-day="星期日" data-slot="上午" >
+                                        <span class="vh">星期日, 上午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="sunday_afternoon" data-day="星期日" data-slot="下午" >
+                                        <span class="vh">星期日, 下午</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="sunday_evening" data-day="星期日" data-slot="晚上" >
+                                        <span class="vh">星期日, 晚上</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                    </tbody>
+            </table>
+            </div>
+                    </div>
+        </section>
+
+        <section class="step " id="help" data-step="help" aria-labelledby="help-title">
+        <h2 id="help-title" tabindex="-1">步驟 5 · 您想如何參與</h2>
+        <p class="step-lead">請選擇您感興趣的志工服務，可複選。</p>
+
+        <fieldset id="interests" data-review data-required-group data-msg="請至少選擇一個您想參與的項目。" >
             <legend>感興趣的志工機會／項目（可複選）<span class="req" aria-hidden="true"> *</span></legend>
             <div class="choices">
                             <label class="choice"><input type="checkbox" name="interests[]" value="general" > <span>一般</span></label>
@@ -176,7 +547,7 @@
                         </div>
                     </fieldset>
 
-        <fieldset id="programs" >
+        <fieldset id="programs" data-review >
             <legend>特定項目（選填）</legend>
             <div class="choices">
                             <label class="choice"><input type="checkbox" name="programs[]" value="tima" > <span>醫療：慈濟國際醫師聯誼會（限醫療專業人員）</span></label>
@@ -186,20 +557,30 @@
                         </div>
                     </fieldset>
 
-        <div class="field">
+        <div class="field" data-review>
             <label for="message">留言（選填）</label>
             <textarea id="message" name="message" rows="4" maxlength="2000" aria-invalid="false" ></textarea>
                     </div>
 
-        <label class="choice field">
+        <label class="choice field" data-review data-review-label="請以電子郵件通知我加拿大慈濟的最新消息與活動" data-review-yes="是">
             <input id="newsletter_opt_in" type="checkbox" name="newsletter_opt_in" value="1" >
             <span>請以電子郵件通知我加拿大慈濟的最新消息與活動</span>
         </label>
         </section>
 
-        <div class="submit-row">
-            <p class="fineprint">送出申請即表示您同意我們依<a href="/volunteer/privacy" target="_blank" rel="noopener">隱私權政策<span class="vh"> （在新分頁開啟）</span></a>所述，使用您的填寫內容審核申請並與您聯絡。</p>
-            <button type="submit" class="button">送出申請</button>
+        <section class="step " id="review" data-step="review" aria-labelledby="review-title">
+        <h2 id="review-title" tabindex="-1" class="js-only">步驟 6 · 檢查並送出</h2>
+        <p class="step-lead js-only">請檢查您的填寫內容。送出前，您可以隨時回到前面的步驟修改。</p>
+        <div class="review js-only" data-review-target data-empty="目前沒有可檢查的內容。" data-not-provided="未填寫" data-edit="修改"></div>
+
+        <p class="fineprint">送出申請即表示您同意我們依<a href="/volunteer/privacy" target="_blank" rel="noopener">隱私權政策<span class="vh"> （在新分頁開啟）</span></a>所述，使用您的填寫內容審核申請並與您聯絡。</p>
+        </section>
+
+        <div class="step-nav">
+            <button type="button" class="button-outline back" data-prev><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> 上一步</button>
+            <button type="button" class="button next" data-next>下一步 <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            <button type="submit" class="button submit">送出申請</button>
+        </div>
         </div>
     </div>
     </div>

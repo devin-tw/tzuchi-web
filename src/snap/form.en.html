@@ -19,6 +19,15 @@
     <link rel="icon" href="/img/tzu-chi-logo.jpg">
     
     <link rel="stylesheet" href="/volunteer/assets/signup.css">
+    
+    <noscript><style>
+        .step { display: block !important; }
+        .step + .step { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid #d6d7d1; }
+        .js-only { display: none !important; }
+        .progress, .progress-text, .step-nav .back, .step-nav .next, [data-bg-add], [data-bg-remove] { display: none !important; }
+        .step-nav .submit { display: inline-flex !important; }
+    </style></noscript>
+    <script src="/volunteer/assets/signup.js" defer></script>
 </head>
 <body>
 <p class="demo-banner" role="note">Demonstration page. Nothing you enter here is sent or saved.</p>
@@ -45,49 +54,129 @@
             <h1>Join us in bringing light and warmth to the dark corners of society!</h1>
             <p class="lead">Today, more than 1,000 Tzu Chi volunteers contribute to the betterment of society, and they are an integral part of the life, spirit, and work at Tzu Chi Canada.</p>
             <p>Regardless of your age, race, religion, or occupation, we warmly welcome you to join our volunteer corps, to help drive a virtuous cycle of charity and kindness.</p>
-            <p>To ensure that we can best match your offer to volunteer with our specific and current needs, we kindly ask that you fill out the application form below accurately and in detail.</p>
 
             <nav class="steps" aria-label="Sections of this form">
                 <ol>
-                                            <li><a href="#about">About you</a></li>
-                                            <li><a href="#where">Where you are</a></li>
-                                            <li><a href="#background">A little more about you</a></li>
-                                            <li><a href="#help">How you&#039;d like to help</a></li>
+                                            <li class="is-current" data-step-link="about">
+                            <a href="#about"  aria-current="step" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">1</span>
+                                <span class="name">About you</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="where">
+                            <a href="#where" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">2</span>
+                                <span class="name">Where you are</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="background">
+                            <a href="#background" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">3</span>
+                                <span class="name">Background</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="availability">
+                            <a href="#availability" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">4</span>
+                                <span class="name">Availability</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="help">
+                            <a href="#help" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">5</span>
+                                <span class="name">How you&#039;d like to help</span>
+                            </a>
+                        </li>
+                                            <li class="" data-step-link="review">
+                            <a href="#review" >
+                                <span class="marker" aria-hidden="true"><svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                                <span class="num" aria-hidden="true">6</span>
+                                <span class="name">Review &amp; submit</span>
+                            </a>
+                        </li>
                                     </ol>
             </nav>
         </div>
     </section>
 
     <div class="wrap">
-    <div class="form-body">
+    <div class="form-body wizard" data-wizard data-active="about" data-steps="about,where,background,availability,help,review">
         
+        <input type="hidden" name="step" value="about" data-step-input>
         
 
+        <div class="sheet">
+        <ol class="progress" data-progress aria-label="Sections of this form">
+                            <li class="is-current" data-progress-step="about"  aria-current="step" >
+                    <a href="#about">
+                        <span class="dot" aria-hidden="true">1</span>
+                        <span class="lbl">About you</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="where" >
+                    <a href="#where">
+                        <span class="dot" aria-hidden="true">2</span>
+                        <span class="lbl">Where you are</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="background" >
+                    <a href="#background">
+                        <span class="dot" aria-hidden="true">3</span>
+                        <span class="lbl">Background</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="availability" >
+                    <a href="#availability">
+                        <span class="dot" aria-hidden="true">4</span>
+                        <span class="lbl">Availability</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="help" >
+                    <a href="#help">
+                        <span class="dot" aria-hidden="true">5</span>
+                        <span class="lbl">How you&#039;d like to help</span>
+                    </a>
+                </li>
+                            <li class="" data-progress-step="review" >
+                    <a href="#review">
+                        <span class="dot" aria-hidden="true">6</span>
+                        <span class="lbl">Review &amp; submit</span>
+                    </a>
+                </li>
+                    </ol>
+        <p class="progress-text" aria-hidden="true" data-progress-text data-pattern="Step :current of :total">Step 1 of 6</p>
+
         
+        <section class="step is-active" id="about" data-step="about" aria-labelledby="about-title">
+        <h2 id="about-title" tabindex="-1">Step 1 · About you</h2>
+        <p class="step-lead">To ensure that we can best match your offer to volunteer with our specific and current needs, we kindly ask that you fill out the application form accurately and in detail.</p>
         <p class="note">Please fill in the fields marked with *.</p>
 
-        <section class="card" id="about" aria-labelledby="about-title">
-        <h2 id="about-title">About you</h2>
         <div class="row two">
-            <div class="field">
+            <div class="field" data-review>
                 <label for="first_name">First name<span class="req" aria-hidden="true"> *</span></label>
-                <input id="first_name" name="first_name" type="text" value="" required autocomplete="given-name" autocapitalize="words" aria-invalid="false" >
+                <input id="first_name" name="first_name" type="text" value="" required data-msg="Please let us know your first name." autocomplete="given-name" autocapitalize="words" aria-invalid="false" >
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="last_name">Last name<span class="req" aria-hidden="true"> *</span></label>
-                <input id="last_name" name="last_name" type="text" value="" required autocomplete="family-name" autocapitalize="words" aria-invalid="false" >
+                <input id="last_name" name="last_name" type="text" value="" required data-msg="Please let us know your last name." autocomplete="family-name" autocapitalize="words" aria-invalid="false" >
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="phone">Phone<span class="req" aria-hidden="true"> *</span></label>
-                <input id="phone" name="phone" type="tel" inputmode="tel" value="" required autocomplete="tel" aria-invalid="false" >
+                <input id="phone" name="phone" type="tel" inputmode="tel" value="" required data-msg="Please share a phone number where we can reach you." autocomplete="tel" aria-invalid="false" >
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="email">Email<span class="req" aria-hidden="true"> *</span></label>
-                <input id="email" name="email" type="email" inputmode="email" value="" required autocomplete="email" autocapitalize="off" spellcheck="false" aria-invalid="false" >
+                <input id="email" name="email" type="email" inputmode="email" value="" required data-msg="Please share your email address." autocomplete="email" autocapitalize="off" spellcheck="false" aria-invalid="false" >
                             </div>
         </div>
 
-        <fieldset id="gender" >
+        <fieldset id="gender" data-review data-required-group data-msg="Please choose your gender." >
             <legend>Gender<span class="req" aria-hidden="true"> *</span></legend>
             <div class="choices cols">
                                     <label class="choice"><input type="radio" name="gender" value="male"  required> Male</label>
@@ -96,16 +185,18 @@
                     </fieldset>
         </section>
 
-        <section class="card" id="where" aria-labelledby="where-title">
-        <h2 id="where-title">Where you are</h2>
+        <section class="step " id="where" data-step="where" aria-labelledby="where-title">
+        <h2 id="where-title" tabindex="-1">Step 2 · Where you are</h2>
+        <p class="step-lead">Tell us where you live so we can connect you with the nearest Tzu Chi community.</p>
+
         <div class="row three">
-            <div class="field">
+            <div class="field" data-review>
                 <label for="city">City<span class="req" aria-hidden="true"> *</span></label>
-                <input id="city" name="city" type="text" value="" required autocomplete="address-level2" autocapitalize="words" aria-invalid="false" >
+                <input id="city" name="city" type="text" value="" required data-msg="Please let us know which city you live in." autocomplete="address-level2" autocapitalize="words" aria-invalid="false" >
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="province">Province<span class="req" aria-hidden="true"> *</span></label>
-                <select id="province" name="province" required autocomplete="address-level1" aria-invalid="false" >
+                <select id="province" name="province" required data-msg="Please choose your province or territory." autocomplete="address-level1" aria-invalid="false" >
                     <option value="">Please choose</option>
                                             <option value="AB" >Alberta</option>
                                             <option value="BC" >British Columbia</option>
@@ -122,16 +213,18 @@
                                             <option value="YT" >Yukon</option>
                                     </select>
                             </div>
-            <div class="field">
+            <div class="field" data-review>
                 <label for="postal_code">Postal code<span class="req" aria-hidden="true"> *</span></label>
-                <input id="postal_code" name="postal_code" type="text" value="" required autocomplete="postal-code" autocapitalize="characters" spellcheck="false" aria-invalid="false" >
+                <input id="postal_code" name="postal_code" type="text" value="" required data-msg="Please let us know your postal code." autocomplete="postal-code" autocapitalize="characters" spellcheck="false" aria-invalid="false" >
                             </div>
         </div>
         </section>
 
-        <section class="card" id="background" aria-labelledby="background-title">
-        <h2 id="background-title">A little more about you</h2>
-            <fieldset id="current_status" >
+        <section class="step " id="background" data-step="background" aria-labelledby="background-title">
+        <h2 id="background-title" tabindex="-1">Step 3 · Background</h2>
+        <p class="step-lead">A little about your current situation and the languages you speak.</p>
+
+            <fieldset id="current_status" data-review data-required-group data-msg="Please choose the status that fits you best." >
                 <legend>Current status<span class="req" aria-hidden="true"> *</span></legend>
                 <div class="choices cols">
                                     <label class="choice"><input type="radio" name="current_status" value="student"  required> Student</label>
@@ -145,7 +238,7 @@
                 <input id="current_status_other" name="current_status_other" type="text" value="" aria-invalid="false" >
                                             </fieldset>
 
-            <fieldset id="languages" >
+            <fieldset id="languages" data-review data-required-group data-msg="Please choose at least one language you speak." >
                 <legend>Language(s)<span class="req" aria-hidden="true"> *</span></legend>
                 <div class="choices cols">
                                     <label class="choice"><input type="checkbox" name="languages[]" value="english" > English</label>
@@ -159,9 +252,287 @@
                                             </fieldset>
         </section>
 
-        <section class="card" id="help" aria-labelledby="help-title">
-        <h2 id="help-title">How you&#039;d like to help</h2>
-        <fieldset id="interests" >
+        <section class="step " id="availability" data-step="availability" aria-labelledby="availability-title">
+        <h2 id="availability-title" tabindex="-1">Step 4 · Availability &amp; Background</h2>
+        <p class="step-lead">Let us know your professional background and when you are available to volunteer. This helps us match you with suitable opportunities.</p>
+
+        <div class="panel" id="backgrounds" data-bg-list data-max="5" >
+            <div class="panel-head">
+                <span class="panel-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></span>
+                <h3>Professional background <span class="optional">(optional)</span></h3>
+            </div>
+            <div class="panel-body">
+                                <div data-bg-rows>
+                                            <div class="bg-row" data-bg-row data-review data-review-type="background" data-review-label="Background 1">
+    <div class="bg-row-head"  hidden >
+        <span class="bg-row-title" data-bg-title data-pattern="Background :number">Background 1</span>
+        <button type="button" class="link-button" data-bg-remove>Remove</button>
+    </div>
+    <div class="row three">
+        <div class="field">
+            <label for="backgrounds-0-profession">Profession / Expertise</label>
+            <select id="backgrounds-0-profession" name="backgrounds[0][profession]" aria-invalid="false" >
+                <option value="">Please choose</option>
+                                    <option value="healthcare" >Healthcare &amp; medicine</option>
+                                    <option value="education" >Education &amp; training</option>
+                                    <option value="technology" >Information technology</option>
+                                    <option value="engineering" >Engineering &amp; construction</option>
+                                    <option value="business" >Business, finance &amp; administration</option>
+                                    <option value="legal" >Legal &amp; public service</option>
+                                    <option value="arts_media" >Arts, media &amp; communications</option>
+                                    <option value="trades" >Skilled trades &amp; manufacturing</option>
+                                    <option value="hospitality" >Food, hospitality &amp; retail</option>
+                                    <option value="social_services" >Social &amp; community services</option>
+                                    <option value="other" >Other</option>
+                            </select>
+                    </div>
+        <div class="field">
+            <label for="backgrounds-0-organization">Organization / Company</label>
+            <input id="backgrounds-0-organization" name="backgrounds[0][organization]" type="text" value="" maxlength="160" autocomplete="organization" placeholder="e.g. Company or organization name" aria-invalid="false" >
+                    </div>
+        <div class="field">
+            <label for="backgrounds-0-experience">Years of experience</label>
+            <select id="backgrounds-0-experience" name="backgrounds[0][experience]" aria-invalid="false" >
+                <option value="">Please choose</option>
+                                    <option value="under_1" >Less than 1 year</option>
+                                    <option value="1_3" >1–3 years</option>
+                                    <option value="4_10" >4–10 years</option>
+                                    <option value="over_10" >More than 10 years</option>
+                            </select>
+                    </div>
+    </div>
+    <div class="field">
+        <label for="backgrounds-0-certifications">Certifications, licenses or relevant training (optional)</label>
+        <input id="backgrounds-0-certifications" name="backgrounds[0][certifications]" type="text" value="" maxlength="255" placeholder="e.g. First aid, teaching certificate, food safety, etc." aria-invalid="false" >
+            </div>
+</div>
+                                    </div>
+                <template data-bg-template>
+                    <div class="bg-row" data-bg-row data-review data-review-type="background" data-review-label="Background __NUMBER__">
+    <div class="bg-row-head" >
+        <span class="bg-row-title" data-bg-title data-pattern="Background :number">Background __NUMBER__</span>
+        <button type="button" class="link-button" data-bg-remove>Remove</button>
+    </div>
+    <div class="row three">
+        <div class="field">
+            <label for="backgrounds-__INDEX__-profession">Profession / Expertise</label>
+            <select id="backgrounds-__INDEX__-profession" name="backgrounds[__INDEX__][profession]" aria-invalid="false" >
+                <option value="">Please choose</option>
+                                    <option value="healthcare" >Healthcare &amp; medicine</option>
+                                    <option value="education" >Education &amp; training</option>
+                                    <option value="technology" >Information technology</option>
+                                    <option value="engineering" >Engineering &amp; construction</option>
+                                    <option value="business" >Business, finance &amp; administration</option>
+                                    <option value="legal" >Legal &amp; public service</option>
+                                    <option value="arts_media" >Arts, media &amp; communications</option>
+                                    <option value="trades" >Skilled trades &amp; manufacturing</option>
+                                    <option value="hospitality" >Food, hospitality &amp; retail</option>
+                                    <option value="social_services" >Social &amp; community services</option>
+                                    <option value="other" >Other</option>
+                            </select>
+                    </div>
+        <div class="field">
+            <label for="backgrounds-__INDEX__-organization">Organization / Company</label>
+            <input id="backgrounds-__INDEX__-organization" name="backgrounds[__INDEX__][organization]" type="text" value="" maxlength="160" autocomplete="organization" placeholder="e.g. Company or organization name" aria-invalid="false" >
+                    </div>
+        <div class="field">
+            <label for="backgrounds-__INDEX__-experience">Years of experience</label>
+            <select id="backgrounds-__INDEX__-experience" name="backgrounds[__INDEX__][experience]" aria-invalid="false" >
+                <option value="">Please choose</option>
+                                    <option value="under_1" >Less than 1 year</option>
+                                    <option value="1_3" >1–3 years</option>
+                                    <option value="4_10" >4–10 years</option>
+                                    <option value="over_10" >More than 10 years</option>
+                            </select>
+                    </div>
+    </div>
+    <div class="field">
+        <label for="backgrounds-__INDEX__-certifications">Certifications, licenses or relevant training (optional)</label>
+        <input id="backgrounds-__INDEX__-certifications" name="backgrounds[__INDEX__][certifications]" type="text" value="" maxlength="255" placeholder="e.g. First aid, teaching certificate, food safety, etc." aria-invalid="false" >
+            </div>
+</div>
+                </template>
+                <button type="button" class="button-outline" data-bg-add><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> Add another background</button>
+            </div>
+        </div>
+
+        <div class="panel" id="availability-grid" role="group" aria-labelledby="availability-grid-title" data-review data-review-type="availability" data-review-label="Availability">
+            <div class="panel-head">
+                <span class="panel-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
+                <span class="panel-heading">
+                    <span class="panel-title" id="availability-grid-title">Availability</span>
+                    <span class="panel-hint">Select the time slots when you are generally available to volunteer. You may select more than one option.</span>
+                </span>
+            </div>
+            <div class="grid-scroll">
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th scope="col" class="day-col">Day</th>
+                                                    <th scope="col">Morning<span class="times">(8am – 12pm)</span></th>
+                                                    <th scope="col">Afternoon<span class="times">(12pm – 5pm)</span></th>
+                                                    <th scope="col">Evening<span class="times">(5pm – 9pm)</span></th>
+                                            </tr>
+                </thead>
+                <tbody>
+                                            <tr>
+                            <th scope="row">Monday</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="monday_morning" data-day="Monday" data-slot="Morning" >
+                                        <span class="vh">Monday, Morning</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="monday_afternoon" data-day="Monday" data-slot="Afternoon" >
+                                        <span class="vh">Monday, Afternoon</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="monday_evening" data-day="Monday" data-slot="Evening" >
+                                        <span class="vh">Monday, Evening</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">Tuesday</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="tuesday_morning" data-day="Tuesday" data-slot="Morning" >
+                                        <span class="vh">Tuesday, Morning</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="tuesday_afternoon" data-day="Tuesday" data-slot="Afternoon" >
+                                        <span class="vh">Tuesday, Afternoon</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="tuesday_evening" data-day="Tuesday" data-slot="Evening" >
+                                        <span class="vh">Tuesday, Evening</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">Wednesday</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="wednesday_morning" data-day="Wednesday" data-slot="Morning" >
+                                        <span class="vh">Wednesday, Morning</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="wednesday_afternoon" data-day="Wednesday" data-slot="Afternoon" >
+                                        <span class="vh">Wednesday, Afternoon</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="wednesday_evening" data-day="Wednesday" data-slot="Evening" >
+                                        <span class="vh">Wednesday, Evening</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">Thursday</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="thursday_morning" data-day="Thursday" data-slot="Morning" >
+                                        <span class="vh">Thursday, Morning</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="thursday_afternoon" data-day="Thursday" data-slot="Afternoon" >
+                                        <span class="vh">Thursday, Afternoon</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="thursday_evening" data-day="Thursday" data-slot="Evening" >
+                                        <span class="vh">Thursday, Evening</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">Friday</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="friday_morning" data-day="Friday" data-slot="Morning" >
+                                        <span class="vh">Friday, Morning</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="friday_afternoon" data-day="Friday" data-slot="Afternoon" >
+                                        <span class="vh">Friday, Afternoon</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="friday_evening" data-day="Friday" data-slot="Evening" >
+                                        <span class="vh">Friday, Evening</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">Saturday</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="saturday_morning" data-day="Saturday" data-slot="Morning" >
+                                        <span class="vh">Saturday, Morning</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="saturday_afternoon" data-day="Saturday" data-slot="Afternoon" >
+                                        <span class="vh">Saturday, Afternoon</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="saturday_evening" data-day="Saturday" data-slot="Evening" >
+                                        <span class="vh">Saturday, Evening</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                            <tr>
+                            <th scope="row">Sunday</th>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="sunday_morning" data-day="Sunday" data-slot="Morning" >
+                                        <span class="vh">Sunday, Morning</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="sunday_afternoon" data-day="Sunday" data-slot="Afternoon" >
+                                        <span class="vh">Sunday, Afternoon</span>
+                                    </label>
+                                </td>
+                                                            <td>
+                                    <label class="slot">
+                                        <input type="checkbox" name="availability[]" value="sunday_evening" data-day="Sunday" data-slot="Evening" >
+                                        <span class="vh">Sunday, Evening</span>
+                                    </label>
+                                </td>
+                                                    </tr>
+                                    </tbody>
+            </table>
+            </div>
+                    </div>
+        </section>
+
+        <section class="step " id="help" data-step="help" aria-labelledby="help-title">
+        <h2 id="help-title" tabindex="-1">Step 5 · How you&#039;d like to help</h2>
+        <p class="step-lead">Choose the kinds of volunteering that interest you. You may pick more than one.</p>
+
+        <fieldset id="interests" data-review data-required-group data-msg="Please choose at least one way you&#039;d like to help." >
             <legend>Volunteer opportunities / programs of interest (you may select more than one option)<span class="req" aria-hidden="true"> *</span></legend>
             <div class="choices">
                             <label class="choice"><input type="checkbox" name="interests[]" value="general" > <span>General</span></label>
@@ -176,7 +547,7 @@
                         </div>
                     </fieldset>
 
-        <fieldset id="programs" >
+        <fieldset id="programs" data-review >
             <legend>Specific programs (optional)</legend>
             <div class="choices">
                             <label class="choice"><input type="checkbox" name="programs[]" value="tima" > <span>Medicine: Tzu Chi International Medical Association (for medical professionals only)</span></label>
@@ -186,20 +557,30 @@
                         </div>
                     </fieldset>
 
-        <div class="field">
+        <div class="field" data-review>
             <label for="message">Message (optional)</label>
             <textarea id="message" name="message" rows="4" maxlength="2000" aria-invalid="false" ></textarea>
                     </div>
 
-        <label class="choice field">
+        <label class="choice field" data-review data-review-label="Keep me updated on any Tzu Chi Canada news and events via email" data-review-yes="Yes">
             <input id="newsletter_opt_in" type="checkbox" name="newsletter_opt_in" value="1" >
             <span>Keep me updated on any Tzu Chi Canada news and events via email</span>
         </label>
         </section>
 
-        <div class="submit-row">
-            <p class="fineprint">By sending this application, you agree that we may use your answers to review it and contact you, as described in our <a href="/volunteer/privacy" target="_blank" rel="noopener">privacy policy<span class="vh"> (opens in a new tab)</span></a>.</p>
-            <button type="submit" class="button">Submit application</button>
+        <section class="step " id="review" data-step="review" aria-labelledby="review-title">
+        <h2 id="review-title" tabindex="-1" class="js-only">Step 6 · Review &amp; submit</h2>
+        <p class="step-lead js-only">Please check your answers. You can go back to change anything before you submit.</p>
+        <div class="review js-only" data-review-target data-empty="Nothing to review yet." data-not-provided="Not provided" data-edit="Edit"></div>
+
+        <p class="fineprint">By sending this application, you agree that we may use your answers to review it and contact you, as described in our <a href="/volunteer/privacy" target="_blank" rel="noopener">privacy policy<span class="vh"> (opens in a new tab)</span></a>.</p>
+        </section>
+
+        <div class="step-nav">
+            <button type="button" class="button-outline back" data-prev><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Back</button>
+            <button type="button" class="button next" data-next>Next <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            <button type="submit" class="button submit">Submit application</button>
+        </div>
         </div>
     </div>
     </div>

@@ -1,4 +1,5 @@
-/* Public volunteer sign-up page. Hand-written: no framework, no build step, no JavaScript.
+/* Public volunteer sign-up page. Hand-written: no framework, no build step. The one small script
+   (js/signup.js) only adds Back / Next to a form that already works without it.
    System fonts only (no external font requests). Colours and sizes are custom properties
    so the look can be tuned in one place.
 
@@ -11,6 +12,7 @@
     color-scheme: light;
     --navy: #1c2541;
     --cloud: #eceef3;
+    --mist: #edf1f6;
     --lotus: #167b44;
     --lotus-dark: #05623d;
     --lotus-light: #74b259;
@@ -66,6 +68,8 @@ main > .page { flex: 1 0 auto; }
 :lang(zh) { --serif: "Songti TC", "Noto Serif TC", "Noto Serif CJK TC", "Source Han Serif TC", "PMingLiU", "MingLiU", serif; }
 :lang(zh) body { line-height: 1.75; }
 :lang(zh) .choice { line-height: 1.6; }
+
+[hidden] { display: none !important; }
 
 .vh {
     position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
@@ -125,25 +129,41 @@ main > .page { flex: 1 0 auto; }
     .has-errors .intro h1 { margin-bottom: 0; }
 }
 
-/* Section index: tells people how long the form is and jumps to a part. Wide screens only;
-   on a phone it would only push the form further down. */
+/* Step list: where you are in the form, and a way back to an earlier step. Wide screens only;
+   on a phone the progress bar above the form does this job. */
 .steps { display: none; }
-.steps ol { margin: 0; padding: 0; list-style: none; counter-reset: index; }
-.steps li { counter-increment: index; border-top: 1px solid rgb(255 255 255 / .18); }
-.steps li:last-child { border-bottom: 1px solid rgb(255 255 255 / .18); }
+.steps ol { margin: 0; padding: 0; list-style: none; }
+.steps li { position: relative; }
 .steps a {
-    display: flex; align-items: baseline; gap: .8rem; padding: .7rem 0;
-    color: #fff; text-decoration: none; font-family: var(--serif); font-size: 1.1rem;
+    display: flex; align-items: center; gap: .85rem; padding: .7rem .75rem; border-radius: 10px;
+    color: var(--on-navy); text-decoration: none; font-family: var(--serif); font-size: 1.1rem;
 }
-.steps a::before { content: counter(index); min-width: 1ch; font-weight: 700; color: var(--lotus-light); }
-.steps a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.steps a:hover .name { text-decoration: underline; text-underline-offset: .2em; }
 .steps a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.steps .marker {
+    flex: none; display: grid; place-items: center; width: 1.6rem; height: 1.6rem;
+    border: 2px solid rgb(255 255 255 / .65); border-radius: 50%; color: var(--navy);
+}
+.steps .marker .icon { display: none; stroke-width: 3; }
+.steps .num { min-width: 1ch; font-weight: 700; color: var(--lotus-light); }
+.steps .name { line-height: 1.3; }
+/* The line between two markers: dotted ahead of you, solid behind. */
+.steps li + li::before {
+    content: ""; position: absolute; left: calc(.75rem + .8rem - 1px); top: -.8rem; height: 1.6rem; width: 0;
+    border-left: 2px dotted rgb(255 255 255 / .4);
+}
+.steps li.is-done::before, .steps li.is-current::before { border-left: 2px solid var(--lotus-light); }
+.steps li.is-done .marker { background: var(--lotus-light); border-color: var(--lotus-light); }
+.steps li.is-done .marker .icon { display: block; }
+.steps li.is-current a { background: rgb(255 255 255 / .09); color: #fff; }
+.steps li.is-current .marker { border-color: var(--lotus-light); background: var(--lotus-light); box-shadow: inset 0 0 0 4px #27314f; }
+.steps li.is-current .name { font-weight: 700; }
 
 @media (min-width: 64rem) {
     .page { display: grid; grid-template-columns: calc(var(--gutter) + 27rem) minmax(0, 1fr); align-items: stretch; }
     .intro-inner { padding: 3.5rem 3rem 3.5rem var(--gutter); }
     .intro h1 { font-size: clamp(2rem, 2.6vw, 2.5rem); }
-    .steps { display: block; margin-top: 2.5rem; }
+    .steps { display: block; margin-top: 2.25rem; padding-top: 1.5rem; border-top: 1px solid rgb(255 255 255 / .18); }
     /* Jing Si Hall rising out of the trees at the panel's left edge. Fixed, so it stays put while the form scrolls. */
     .intro {
         --temple-h: min(86vh, 58rem);
@@ -155,28 +175,125 @@ main > .page { flex: 1 0 auto; }
     }
 }
 /* Pin the panel only when all of it fits on screen; otherwise its end would be unreachable. */
-@media (min-width: 64rem) and (min-height: 50rem) {
+@media (min-width: 64rem) and (min-height: 64rem) {
     .intro-inner { position: sticky; top: 0; }
 }
 
-/* Form */
-.wrap { padding: 1.75rem 1.25rem 4rem; }
-.form-body { max-width: 40rem; }
+/* Form: one white sheet that holds the progress bar, the current step and the buttons. */
+.wrap { padding: 1.25rem 1rem 3rem; }
+.form-body { max-width: 56rem; }
 @media (min-width: 64rem) {
-    .wrap { padding: 3.5rem max(2rem, calc(var(--gutter) - 1rem)) 5rem 3.5rem; }
+    .wrap { padding: 2.5rem 1.75rem 4rem; }
 }
 
-.note { margin: 0 0 1.75rem; color: var(--muted); font-size: .9rem; }
-
-/* Sections are open groups divided by a rule; the numeral marks the order of the form. */
-.card, fieldset, .errors { scroll-margin-top: 1.5rem; }
-.card { margin: 0; padding: 1.75rem 0 1.25rem; border-top: 1px solid var(--rule); counter-increment: step; }
-.card h2 {
-    display: flex; align-items: baseline; gap: .7rem;
-    margin: 0 0 1.25rem; font-family: var(--serif); font-size: 1.4rem; line-height: 1.3; color: var(--navy);
+.sheet {
+    padding: 1.25rem 1.1rem 1.5rem; background: var(--paper);
+    border: 1px solid var(--rule); border-radius: 12px;
+    box-shadow: 0 1px 2px rgb(28 37 65 / .05), 0 10px 28px rgb(28 37 65 / .07);
 }
-.card h2::before { content: counter(step); font-size: 1.4rem; font-weight: 700; color: var(--lotus); }
-.form-body { counter-reset: step; }
+@media (min-width: 48rem) { .sheet { padding: 1.75rem 2rem 2rem; } }
+
+/* Progress: a numbered dot and a bar for each step. */
+.progress { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .6rem; margin: 0 0 1.5rem; padding: 0; list-style: none; }
+.progress li { border-bottom: 3px solid var(--rule); padding-bottom: .85rem; }
+.progress li.is-done { border-color: var(--lotus-light); }
+.progress li.is-current { border-color: var(--lotus-dark); }
+.progress a {
+    display: flex; align-items: center; gap: .55rem; min-height: 2.4rem;
+    color: var(--muted); text-decoration: none; font-family: var(--serif); font-size: .8rem; line-height: 1.25;
+}
+.progress li.is-current a { color: var(--ink); font-weight: 700; }
+.progress a:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; border-radius: 4px; }
+.dot {
+    flex: none; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%;
+    background: var(--stone); border: 2px solid var(--stone); color: var(--muted);
+    font-family: var(--sans); font-size: .8rem; font-weight: 700;
+}
+.progress li.is-done .dot { background: var(--lotus-wash); border-color: var(--lotus-light); color: var(--lotus-dark); }
+.progress li.is-current .dot { background: var(--lotus-dark); border-color: var(--lotus-dark); color: #fff; }
+.progress-text { display: none; margin: -.75rem 0 1.25rem; color: var(--muted); font-size: .9rem; }
+@media (max-width: 47.99rem) {
+    .progress { gap: .4rem; margin-bottom: 1rem; }
+    .progress .lbl { display: none; }
+    .progress a { justify-content: center; }
+    .progress-text { display: block; }
+}
+
+.step:not(.is-active) { display: none; }
+.step > h2 {
+    margin: 0 0 .5rem; font-family: var(--serif); font-size: clamp(1.6rem, 3.4vw, 2.15rem); line-height: 1.2;
+    color: var(--navy); text-wrap: balance;
+}
+.step > h2:focus { outline: none; }
+.step-lead { margin: 0 0 1.5rem; max-width: 42rem; color: var(--muted); text-wrap: pretty; }
+
+.note { margin: 0 0 1.5rem; color: var(--muted); font-size: .9rem; }
+
+/* Grouped answers on a step: a pale band for the title, the answers below. */
+.panel { margin: 0 0 1.5rem; padding: 0; min-width: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.panel-head { display: flex; align-items: center; gap: .8rem; padding: .85rem 1.25rem; background: var(--mist); }
+.panel-icon { flex: none; display: grid; place-items: center; color: var(--navy); }
+.panel-head h3, .panel-title { margin: 0; font-family: var(--serif); font-size: 1.1rem; font-weight: 700; line-height: 1.3; color: var(--navy); }
+.panel-heading { display: grid; gap: .1rem; }
+.panel-hint { font-size: .85rem; line-height: 1.4; color: var(--muted); }
+.optional { font-family: var(--sans); font-size: .9rem; font-weight: 400; color: var(--muted); }
+.panel-body { padding: 1.25rem; }
+.panel-error { margin: .75rem 1.25rem; }
+
+/* Professional backgrounds */
+.bg-row + .bg-row { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px dashed var(--field-line); }
+.bg-row-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .75rem; }
+.bg-row-title { font-weight: 600; font-size: .95rem; color: var(--navy); }
+@media (min-width: 40rem) { .bg-row .row.three { grid-template-columns: 1fr 1fr .8fr; } }
+.link-button {
+    min-height: 2.25rem; padding: .25rem .6rem; background: none; border: 0; border-radius: var(--radius);
+    font: inherit; font-size: .9rem; font-weight: 600; color: var(--lotus-dark);
+    text-decoration: underline; text-underline-offset: .18em; cursor: pointer;
+}
+.link-button:hover { background: var(--lotus-wash); }
+
+/* Availability grid */
+.grid-scroll { overflow-x: auto; }
+.grid { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.grid th, .grid td { padding: .35rem .5rem; border-top: 1px solid var(--rule); text-align: center; }
+.grid th + th, .grid td { border-left: 1px solid var(--rule); }
+.grid thead th { padding: .65rem .5rem; background: #f7f8fa; border-top: 0; font-size: .85rem; font-weight: 600; line-height: 1.3; }
+.grid thead th:first-child, .grid tbody th { text-align: left; padding-left: .75rem; }
+.grid tbody th { border-left: 0; font-weight: 500; white-space: nowrap; }
+.grid .times { display: block; font-weight: 400; font-size: .8rem; color: var(--muted); white-space: nowrap; }
+.slot { display: grid; place-items: center; min-height: 2.4rem; margin: 0; padding: 0; cursor: pointer; }
+.slot input { width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--lotus); cursor: pointer; }
+.grid td:has(input:checked) { background: var(--lotus-wash); }
+.grid td:has(input:focus-visible) { outline: 3px solid var(--navy); outline-offset: -3px; }
+@media (max-width: 39.99rem) {
+    .grid { font-size: .85rem; }
+    .grid th, .grid td { padding-inline: .25rem; }
+    .grid .times { white-space: normal; }
+}
+
+/* Back / Next. Which ones show follows the step the wizard is on. */
+.step-nav { display: flex; align-items: center; gap: .75rem; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.step-nav .next, .step-nav .submit { margin-left: auto; }
+.step-nav .submit { display: none; }
+.wizard[data-active="about"] .step-nav .back { display: none; }
+.wizard[data-active="review"] .step-nav .next { display: none; }
+.wizard[data-active="review"] .step-nav .submit { display: inline-flex; }
+@media (max-width: 39.99rem) {
+    .step-nav .button, .step-nav .button-outline { flex: 1; padding-inline: 1rem; }
+}
+
+/* Review */
+.review { display: grid; gap: 1.25rem; margin: 0 0 1.75rem; }
+.review-group { border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.review-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .45rem .75rem .45rem 1.1rem; background: var(--mist); }
+.review-head h3 { margin: 0; font-family: var(--serif); font-size: 1.05rem; color: var(--navy); }
+.review dl { margin: 0; padding: 0 1.1rem; }
+.review dl > div { display: grid; gap: .1rem 1.5rem; padding: .7rem 0; border-top: 1px solid var(--rule); }
+.review dl > div:first-child { border-top: 0; }
+@media (min-width: 40rem) { .review dl > div { grid-template-columns: 13rem minmax(0, 1fr); } }
+.review dt { font-size: .9rem; color: var(--muted); }
+.review dd { display: grid; margin: 0; overflow-wrap: anywhere; }
+.review dd.is-empty { color: var(--muted); font-style: italic; }
 
 .field { margin-bottom: 1.1rem; }
 .row { display: grid; gap: 1.1rem 1rem; margin-bottom: 1.1rem; }
@@ -196,6 +313,7 @@ input[type="text"], input[type="email"], input[type="tel"], select, textarea {
     border: 1px solid var(--field-line); border-radius: var(--radius);
 }
 textarea { resize: vertical; min-height: 7rem; }
+::placeholder { color: #767870; opacity: 1; }
 input:hover, select:hover, textarea:hover { border-color: var(--navy); }
 input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
     outline: 3px solid var(--navy); outline-offset: 2px;
@@ -235,17 +353,22 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
     border-color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger);
 }
 
-.submit-row { padding-top: 1.75rem; border-top: 1px solid var(--rule); }
-.fineprint { margin: 0 0 1.25rem; color: var(--muted); font-size: .9rem; max-width: 34rem; }
+.fineprint { margin: 0; padding-top: .25rem; color: var(--muted); font-size: .9rem; max-width: 34rem; }
 .fineprint a, .doc a, .site-footer a { color: var(--navy); text-underline-offset: .18em; }
-.button {
-    display: block; width: 100%; min-height: 3.1rem; padding: .8rem 2rem;
-    background: var(--lotus); color: #fff; border: 0; border-radius: var(--radius);
-    font: inherit; font-size: 1.05rem; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer;
+.button, .button-outline {
+    display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+    min-height: 3rem; padding: .7rem 1.75rem; border-radius: var(--radius);
+    font: inherit; font-size: 1rem; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer;
 }
+.button { min-width: 8rem; background: var(--lotus); color: #fff; border: 1px solid var(--lotus-dark); }
 .button:hover { background: var(--lotus-dark); }
 .button:active { background: var(--lotus-dark); transform: translateY(1px); }
-@media (min-width: 40rem) { .button { display: inline-block; width: auto; min-width: 15rem; } }
+.button-outline { background: var(--paper); color: var(--ink); border: 1px solid var(--field-line); }
+.button-outline:hover { border-color: var(--navy); background: var(--cloud); }
+.icon { flex: none; }
+/* "Add another background": quieter, in the lotus green. */
+[data-bg-add] { min-height: 2.6rem; margin-top: 1.25rem; padding: .5rem 1rem; font-size: .9rem; color: var(--lotus-dark); border-color: var(--lotus); }
+[data-bg-add]:hover { background: var(--lotus-wash); border-color: var(--lotus-dark); }
 
 /* Thank-you page */
 .thanks, .doc {
