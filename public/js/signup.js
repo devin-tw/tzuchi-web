@@ -190,12 +190,13 @@
             rows.forEach(function (row, i) {
                 var title = row.querySelector('[data-bg-title]');
                 title.textContent = title.getAttribute('data-pattern').replace(':number', i + 1);
-                row.querySelector('.bg-row-head').hidden = i === 0;
+                row.querySelector('[data-bg-remove]').hidden = rows.length === 1;
             });
             bgAdd.hidden = rows.length >= bgMax;
         };
 
         bgAdd.addEventListener('click', function () {
+            if (bgRows.querySelectorAll('[data-bg-row]').length >= bgMax) return;
             var holder = document.createElement('template');
             holder.innerHTML = bgTemplate.innerHTML.split('__INDEX__').join(nextIndex++).split('__NUMBER__').join('');
             var row = holder.content.querySelector('[data-bg-row]');
@@ -215,6 +216,25 @@
 
         renumber();
     }
+
+    function updateConditionalFields() {
+        root.querySelectorAll('[data-bg-row]').forEach(function (row) {
+            var currentPosition = row.querySelector('select[name$="[is_current]"]');
+            var endMonth = row.querySelector('input[name$="[end_month]"]');
+            if (currentPosition && endMonth) {
+                endMonth.disabled = currentPosition.value === 'yes';
+            }
+        });
+        var other = root.querySelector('input[name="education[certifications_other]"]');
+        var selected = root.querySelector('input[name="education[certifications][]"][value="other"]');
+        if (other && selected) {
+            other.closest('.field').hidden = !selected.checked;
+            other.disabled = !selected.checked;
+            other.required = selected.checked;
+        }
+    }
+    root.addEventListener('change', updateConditionalFields);
+    updateConditionalFields();
 
     /* ---- Review: read the answers back from the form itself ---- */
 
@@ -249,12 +269,12 @@
 
         if (type === 'background') {
             var parts = [];
-            node.querySelectorAll('select, input').forEach(function (el) {
-                var text = el.tagName === 'SELECT' ? (el.value ? el.options[el.selectedIndex].text : '') : el.value.trim();
-                if (text) parts.push(text);
+            node.querySelectorAll('[data-review]').forEach(function (field) {
+                var item = describe(field);
+                if (item && item.lines.length) parts.push(item.label + ': ' + item.lines.join(', '));
             });
             var title = node.querySelector('[data-bg-title]');
-            return { label: title ? title.textContent : labelOf(node), lines: parts.length ? [parts.join(' · ')] : [], optionalRow: true };
+            return { label: title ? title.textContent : labelOf(node), lines: parts, optionalRow: true };
         }
 
         if (node.hasAttribute('data-review-yes')) {
@@ -268,8 +288,8 @@
             chosen.forEach(function (input) { names.push(textOf(input.closest('.choice') || input.parentNode)); });
             lines.push(names.join(', '));
         }
-        node.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea').forEach(function (el) {
-            if (el.value.trim()) lines.push(el.value.trim());
+        node.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="month"], textarea').forEach(function (el) {
+            if (!el.disabled && el.value.trim()) lines.push(el.value.trim());
         });
         node.querySelectorAll('select').forEach(function (el) {
             if (el.value) lines.push(el.options[el.selectedIndex].text);
@@ -287,6 +307,7 @@
         keys.slice(0, -1).forEach(function (key) {
             var items = [];
             steps[key].querySelectorAll('[data-review]').forEach(function (node, i) {
+                if (node.parentElement.closest('[data-review-type="background"]')) return;
                 var item = describe(node);
                 if (item && !(item.optionalRow && !item.lines.length && i > 0)) items.push(item);
             });

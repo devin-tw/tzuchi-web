@@ -27,10 +27,11 @@
         .progress, .progress-text, .step-nav .back, .step-nav .next, [data-bg-add], [data-bg-remove] { display: none !important; }
         .step-nav .submit { display: inline-flex !important; }
     </style></noscript>
-    <script src="/volunteer/assets/signup.js" defer></script>
+    <script src="/volunteer/assets/signup-state.js" defer></script>
+<script src="/volunteer/assets/signup.js" defer></script>
 </head>
 <body>
-<p class="demo-banner" role="note">Demonstration page. Nothing you enter here is sent or saved.</p>
+<p class="demo-banner" role="note">Demonstration page. Applications are not recorded.</p>
 
 <form method="POST" action="/volunteer/signup" novalidate>
         <button type="submit" class="default-submit" tabindex="-1" aria-hidden="true"></button>
@@ -43,6 +44,7 @@
             <nav class="lang" aria-label="Language">
                                                             <span><button type="submit" formaction="/volunteer/signup/locale/en" formnovalidate lang="en"  aria-current="true" >English</button></span>
                                                                                 <span><button type="submit" formaction="/volunteer/signup/locale/zh_TW" formnovalidate lang="zh-Hant" >繁體中文</button></span>
+                                                                                <span><button type="submit" formaction="/volunteer/signup/locale/fr" formnovalidate lang="fr" >Français</button></span>
                                                 </nav>
         </div>
     </header>
@@ -113,37 +115,37 @@
         <div class="sheet">
         <ol class="progress" data-progress aria-label="Sections of this form">
                             <li class="is-current" data-progress-step="about"  aria-current="step" >
-                    <a href="#about">
+                    <a href="#about" aria-label="About you">
                         <span class="dot" aria-hidden="true">1</span>
                         <span class="lbl">About you</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="where" >
-                    <a href="#where">
+                    <a href="#where" aria-label="Where you are">
                         <span class="dot" aria-hidden="true">2</span>
                         <span class="lbl">Where you are</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="background" >
-                    <a href="#background">
+                    <a href="#background" aria-label="Background">
                         <span class="dot" aria-hidden="true">3</span>
                         <span class="lbl">Background</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="availability" >
-                    <a href="#availability">
+                    <a href="#availability" aria-label="Availability">
                         <span class="dot" aria-hidden="true">4</span>
                         <span class="lbl">Availability</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="help" >
-                    <a href="#help">
+                    <a href="#help" aria-label="How you&#039;d like to help">
                         <span class="dot" aria-hidden="true">5</span>
                         <span class="lbl">How you&#039;d like to help</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="review" >
-                    <a href="#review">
+                    <a href="#review" aria-label="Review &amp; submit">
                         <span class="dot" aria-hidden="true">6</span>
                         <span class="lbl">Review &amp; submit</span>
                     </a>
@@ -259,102 +261,315 @@
         <div class="panel" id="backgrounds" data-bg-list data-max="5" >
             <div class="panel-head">
                 <span class="panel-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></span>
-                <h3>Professional background <span class="optional">(optional)</span></h3>
+                <h3>Work experience <span class="optional">(optional)</span></h3>
             </div>
             <div class="panel-body">
                                 <div data-bg-rows>
-                                            <div class="bg-row" data-bg-row data-review data-review-type="background" data-review-label="Background 1">
-    <div class="bg-row-head"  hidden >
-        <span class="bg-row-title" data-bg-title data-pattern="Background :number">Background 1</span>
+                                            <div class="bg-row" data-bg-row data-review data-review-type="background">
+    <div class="bg-row-head">
+        <span class="bg-row-title" data-bg-title data-pattern="Work experience :number">Work experience 1</span>
         <button type="button" class="link-button" data-bg-remove>Remove</button>
     </div>
-    <div class="row three">
-        <div class="field">
-            <label for="backgrounds-0-profession">Profession / Expertise</label>
-            <select id="backgrounds-0-profession" name="backgrounds[0][profession]" aria-invalid="false" >
+    <div class="row two">
+                    <div class="field" data-review>
+        <label for="backgrounds-0-organization">Organization name</label>
+                    <input id="backgrounds-0-organization" name="backgrounds[0][organization]" type="text" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-0-industry">Industry</label>
+                    <input id="backgrounds-0-industry" name="backgrounds[0][industry]" type="text" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-0-start_month">Start month</label>
+                    <input id="backgrounds-0-start_month" name="backgrounds[0][start_month]" type="month" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-0-end_month">End month</label>
+                    <input id="backgrounds-0-end_month" name="backgrounds[0][end_month]" type="month" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+            </div>
+    <p class="note">For a current position, leave the end month blank.</p>
+    <div class="row two">
+        <div class="field" data-review>
+        <label for="backgrounds-0-is_current">Current position</label>
+                    <select id="backgrounds-0-is_current" name="backgrounds[0][is_current]" aria-invalid="false" >
                 <option value="">Please choose</option>
-                                    <option value="healthcare" >Healthcare &amp; medicine</option>
-                                    <option value="education" >Education &amp; training</option>
-                                    <option value="technology" >Information technology</option>
-                                    <option value="engineering" >Engineering &amp; construction</option>
-                                    <option value="business" >Business, finance &amp; administration</option>
-                                    <option value="legal" >Legal &amp; public service</option>
-                                    <option value="arts_media" >Arts, media &amp; communications</option>
-                                    <option value="trades" >Skilled trades &amp; manufacturing</option>
-                                    <option value="hospitality" >Food, hospitality &amp; retail</option>
-                                    <option value="social_services" >Social &amp; community services</option>
-                                    <option value="other" >Other</option>
+                                    <option value="yes" >Yes</option>
+                                    <option value="no" >No</option>
                             </select>
                     </div>
-        <div class="field">
-            <label for="backgrounds-0-organization">Organization / Company</label>
-            <input id="backgrounds-0-organization" name="backgrounds[0][organization]" type="text" value="" maxlength="160" autocomplete="organization" placeholder="e.g. Company or organization name" aria-invalid="false" >
-                    </div>
-        <div class="field">
-            <label for="backgrounds-0-experience">Years of experience</label>
-            <select id="backgrounds-0-experience" name="backgrounds[0][experience]" aria-invalid="false" >
+        <div class="field" data-review>
+        <label for="backgrounds-0-management_experience">Management experience (years)</label>
+                    <select id="backgrounds-0-management_experience" name="backgrounds[0][management_experience]" aria-invalid="false" >
                 <option value="">Please choose</option>
-                                    <option value="under_1" >Less than 1 year</option>
+                                    <option value="none" >None</option>
                                     <option value="1_3" >1–3 years</option>
-                                    <option value="4_10" >4–10 years</option>
-                                    <option value="over_10" >More than 10 years</option>
+                                    <option value="3_5" >3–5 years</option>
+                                    <option value="over_5" >More than 5 years</option>
                             </select>
                     </div>
     </div>
-    <div class="field">
-        <label for="backgrounds-0-certifications">Certifications, licenses or relevant training (optional)</label>
-        <input id="backgrounds-0-certifications" name="backgrounds[0][certifications]" type="text" value="" maxlength="255" placeholder="e.g. First aid, teaching certificate, food safety, etc." aria-invalid="false" >
-            </div>
+    <div class="field" data-review>
+        <label for="backgrounds-0-summary">Summary of responsibilities</label>
+                    <textarea id="backgrounds-0-summary" name="backgrounds[0][summary]" rows="3" maxlength="2000" aria-invalid="false" ></textarea>
+                    </div>
+    <fieldset id="backgrounds-0-work_fields" data-review >
+        <legend>Areas of work (select all that apply)</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="education" > <span>Education</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="medicine" > <span>Medicine</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="nursing" > <span>Nursing</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="social_work" > <span>Social work</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="counselling" > <span>Counselling</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="law" > <span>Law</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="accounting" > <span>Finance &amp; accounting</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="human_resources" > <span>Human resources</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="marketing" > <span>Marketing</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="events" > <span>Event planning</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="project_management" > <span>Project management</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="it" > <span>Information technology</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="ai" > <span>AI applications</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="web" > <span>Web development</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="graphic_design" > <span>Graphic design</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="video" > <span>Video production</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="translation" > <span>Translation</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="other" > <span>Other</span></label>
+                    </div>
+            </fieldset>
 </div>
                                     </div>
                 <template data-bg-template>
-                    <div class="bg-row" data-bg-row data-review data-review-type="background" data-review-label="Background __NUMBER__">
-    <div class="bg-row-head" >
-        <span class="bg-row-title" data-bg-title data-pattern="Background :number">Background __NUMBER__</span>
+                    <div class="bg-row" data-bg-row data-review data-review-type="background">
+    <div class="bg-row-head">
+        <span class="bg-row-title" data-bg-title data-pattern="Work experience :number">Work experience __NUMBER__</span>
         <button type="button" class="link-button" data-bg-remove>Remove</button>
     </div>
-    <div class="row three">
-        <div class="field">
-            <label for="backgrounds-__INDEX__-profession">Profession / Expertise</label>
-            <select id="backgrounds-__INDEX__-profession" name="backgrounds[__INDEX__][profession]" aria-invalid="false" >
+    <div class="row two">
+                    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-organization">Organization name</label>
+                    <input id="backgrounds-__INDEX__-organization" name="backgrounds[__INDEX__][organization]" type="text" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-industry">Industry</label>
+                    <input id="backgrounds-__INDEX__-industry" name="backgrounds[__INDEX__][industry]" type="text" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-start_month">Start month</label>
+                    <input id="backgrounds-__INDEX__-start_month" name="backgrounds[__INDEX__][start_month]" type="month" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-end_month">End month</label>
+                    <input id="backgrounds-__INDEX__-end_month" name="backgrounds[__INDEX__][end_month]" type="month" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+            </div>
+    <p class="note">For a current position, leave the end month blank.</p>
+    <div class="row two">
+        <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-is_current">Current position</label>
+                    <select id="backgrounds-__INDEX__-is_current" name="backgrounds[__INDEX__][is_current]" aria-invalid="false" >
                 <option value="">Please choose</option>
-                                    <option value="healthcare" >Healthcare &amp; medicine</option>
-                                    <option value="education" >Education &amp; training</option>
-                                    <option value="technology" >Information technology</option>
-                                    <option value="engineering" >Engineering &amp; construction</option>
-                                    <option value="business" >Business, finance &amp; administration</option>
-                                    <option value="legal" >Legal &amp; public service</option>
-                                    <option value="arts_media" >Arts, media &amp; communications</option>
-                                    <option value="trades" >Skilled trades &amp; manufacturing</option>
-                                    <option value="hospitality" >Food, hospitality &amp; retail</option>
-                                    <option value="social_services" >Social &amp; community services</option>
-                                    <option value="other" >Other</option>
+                                    <option value="yes" >Yes</option>
+                                    <option value="no" >No</option>
                             </select>
                     </div>
-        <div class="field">
-            <label for="backgrounds-__INDEX__-organization">Organization / Company</label>
-            <input id="backgrounds-__INDEX__-organization" name="backgrounds[__INDEX__][organization]" type="text" value="" maxlength="160" autocomplete="organization" placeholder="e.g. Company or organization name" aria-invalid="false" >
-                    </div>
-        <div class="field">
-            <label for="backgrounds-__INDEX__-experience">Years of experience</label>
-            <select id="backgrounds-__INDEX__-experience" name="backgrounds[__INDEX__][experience]" aria-invalid="false" >
+        <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-management_experience">Management experience (years)</label>
+                    <select id="backgrounds-__INDEX__-management_experience" name="backgrounds[__INDEX__][management_experience]" aria-invalid="false" >
                 <option value="">Please choose</option>
-                                    <option value="under_1" >Less than 1 year</option>
+                                    <option value="none" >None</option>
                                     <option value="1_3" >1–3 years</option>
-                                    <option value="4_10" >4–10 years</option>
-                                    <option value="over_10" >More than 10 years</option>
+                                    <option value="3_5" >3–5 years</option>
+                                    <option value="over_5" >More than 5 years</option>
                             </select>
                     </div>
     </div>
-    <div class="field">
-        <label for="backgrounds-__INDEX__-certifications">Certifications, licenses or relevant training (optional)</label>
-        <input id="backgrounds-__INDEX__-certifications" name="backgrounds[__INDEX__][certifications]" type="text" value="" maxlength="255" placeholder="e.g. First aid, teaching certificate, food safety, etc." aria-invalid="false" >
-            </div>
+    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-summary">Summary of responsibilities</label>
+                    <textarea id="backgrounds-__INDEX__-summary" name="backgrounds[__INDEX__][summary]" rows="3" maxlength="2000" aria-invalid="false" ></textarea>
+                    </div>
+    <fieldset id="backgrounds-__INDEX__-work_fields" data-review >
+        <legend>Areas of work (select all that apply)</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="education" > <span>Education</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="medicine" > <span>Medicine</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="nursing" > <span>Nursing</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="social_work" > <span>Social work</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="counselling" > <span>Counselling</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="law" > <span>Law</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="accounting" > <span>Finance &amp; accounting</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="human_resources" > <span>Human resources</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="marketing" > <span>Marketing</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="events" > <span>Event planning</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="project_management" > <span>Project management</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="it" > <span>Information technology</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="ai" > <span>AI applications</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="web" > <span>Web development</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="graphic_design" > <span>Graphic design</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="video" > <span>Video production</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="translation" > <span>Translation</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="other" > <span>Other</span></label>
+                    </div>
+            </fieldset>
 </div>
                 </template>
-                <button type="button" class="button-outline" data-bg-add><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> Add another background</button>
+                <button type="button" class="button-outline" data-bg-add><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> Add work experience</button>
             </div>
         </div>
+
+        <div class="panel" id="education" role="group" aria-labelledby="education-title">
+    <div class="panel-head"><h3 id="education-title">Education &amp; certifications</h3></div>
+    <div class="panel-body">
+                <div class="field" data-review>
+        <label for="education-level">Highest education level</label>
+                    <select id="education-level" name="education[level]" aria-invalid="false" >
+                <option value="">Please choose</option>
+                                    <option value="high_school" >High school / vocational school</option>
+                                    <option value="college" >College diploma</option>
+                                    <option value="university" >Bachelor’s degree</option>
+                                    <option value="masters" >Master’s degree</option>
+                                    <option value="doctorate" >Doctorate</option>
+                            </select>
+                    </div>
+        <div class="row two">
+                            <div class="field" data-review>
+        <label for="education-school">School name</label>
+                    <input id="education-school" name="education[school]" type="text" value="" maxlength="255" aria-invalid="false" >
+                    </div>
+                            <div class="field" data-review>
+        <label for="education-major">Major / department</label>
+                    <input id="education-major" name="education[major]" type="text" value="" maxlength="255" aria-invalid="false" >
+                    </div>
+                    </div>
+        <fieldset id="education-certifications" data-review >
+        <legend>Professional certifications (select all that apply)</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="pmp" > <span>PMP</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="capm" > <span>CAPM</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="nurse" > <span>Nursing licence</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="social_worker" > <span>Social work licence</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="teacher" > <span>Teaching certificate</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="accountant" > <span>Accounting licence</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="lawyer" > <span>Law licence</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="google" > <span>Google Certificate</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="microsoft" > <span>Microsoft Certificate</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="ai" > <span>AI certifications</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="other" > <span>Other</span></label>
+                    </div>
+            </fieldset>
+        <div class="field" data-review>
+        <label for="education-certifications_other">Other certification — please describe</label>
+                    <input id="education-certifications_other" name="education[certifications_other]" type="text" value="" maxlength="500" aria-invalid="false" >
+                    </div>
+    </div>
+</div>
+<div class="panel" id="skills" role="group" aria-labelledby="skills-title">
+    <div class="panel-head"><h3 id="skills-title">Professional skills</h3></div>
+    <div class="panel-body">
+        <p class="note">These details are optional. Select all skills that apply.</p>
+                            <fieldset id="skills-administration" data-review >
+        <legend>Administration</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[administration][]" value="word_processing" > <span>Word processing</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[administration][]" value="minutes" > <span>Meeting minutes</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[administration][]" value="administration" > <span>Administrative management</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[administration][]" value="official_writing" > <span>Official correspondence</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-project_management" data-review >
+        <legend>Project management</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[project_management][]" value="project_management" > <span>Project management</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[project_management][]" value="pmo" > <span>PMO</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[project_management][]" value="scrum" > <span>Scrum</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[project_management][]" value="agile" > <span>Agile</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-it" data-review >
+        <legend>Information technology</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="systems_analysis" > <span>Systems analysis</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="programming" > <span>Programming</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="websites" > <span>Website development</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="databases" > <span>Database management</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="security" > <span>Information security</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-ai" data-review >
+        <legend>AI skills</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="chatgpt" > <span>ChatGPT</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="copilot" > <span>Microsoft Copilot</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="ai_agent" > <span>AI Agent</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="prompt_engineering" > <span>Prompt Engineering</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="gemini" > <span>Gemini</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-design" data-review >
+        <legend>Design tools</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[design][]" value="canva" > <span>Canva</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[design][]" value="photoshop" > <span>Photoshop</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[design][]" value="illustrator" > <span>Illustrator</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[design][]" value="video_editing" > <span>Video editing</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-media" data-review >
+        <legend>Design &amp; media</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="visual_design" > <span>Visual design</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="canva" > <span>Canva</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="photoshop" > <span>Photoshop</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="illustrator" > <span>Illustrator</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="graphic_design" > <span>Graphic design</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="banners" > <span>Banner design</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="posters" > <span>Poster design</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="edm_design" > <span>Email newsletter design</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="video_editing" > <span>Video editing</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="photography" > <span>Photography</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="videography" > <span>Videography</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-marketing" data-review >
+        <legend>Marketing &amp; outreach</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="facebook" > <span>Facebook management</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="social_media" > <span>Social media management</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="google_ads" > <span>Google Ads</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="seo" > <span>SEO</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="email_marketing" > <span>Email marketing</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="copywriting" > <span>Copywriting</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-training" data-review >
+        <legend>Education &amp; training</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[training][]" value="course_design" > <span>Course design</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[training][]" value="teaching" > <span>Teaching &amp; facilitation</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[training][]" value="materials" > <span>Learning materials</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[training][]" value="workshops" > <span>Workshop facilitation</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-medical" data-review >
+        <legend>Medical specialties</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="physician" > <span>Physician</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="nursing" > <span>Nursing</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="pharmacy" > <span>Pharmacy</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="medical_technology" > <span>Medical technology</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="rehabilitation" > <span>Rehabilitation therapy</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="counselling" > <span>Counselling</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="public_health" > <span>Public health</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="long_term_care" > <span>Long-term care</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="social_welfare" > <span>Social welfare</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="medical_administration" > <span>Medical administration</span></label>
+                    </div>
+            </fieldset>
+                <div class="field" data-review>
+        <label for="skills_other">Other skills</label>
+                    <textarea id="skills_other" name="skills_other" rows="3" maxlength="1000" aria-invalid="false" ></textarea>
+                    </div>
+    </div>
+</div>
 
         <div class="panel" id="availability-grid" role="group" aria-labelledby="availability-grid-title" data-review data-review-type="availability" data-review-label="Availability">
             <div class="panel-head">
@@ -369,9 +584,8 @@
                 <thead>
                     <tr>
                         <th scope="col" class="day-col">Day</th>
-                                                    <th scope="col">Morning<span class="times">(8am – 12pm)</span></th>
-                                                    <th scope="col">Afternoon<span class="times">(12pm – 5pm)</span></th>
-                                                    <th scope="col">Evening<span class="times">(5pm – 9pm)</span></th>
+                                                    <th scope="col">Morning</th>
+                                                    <th scope="col">Afternoon</th>
                                             </tr>
                 </thead>
                 <tbody>
@@ -389,12 +603,6 @@
                                         <span class="vh">Monday, Afternoon</span>
                                     </label>
                                 </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="monday_evening" data-day="Monday" data-slot="Evening" >
-                                        <span class="vh">Monday, Evening</span>
-                                    </label>
-                                </td>
                                                     </tr>
                                             <tr>
                             <th scope="row">Tuesday</th>
@@ -408,12 +616,6 @@
                                     <label class="slot">
                                         <input type="checkbox" name="availability[]" value="tuesday_afternoon" data-day="Tuesday" data-slot="Afternoon" >
                                         <span class="vh">Tuesday, Afternoon</span>
-                                    </label>
-                                </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="tuesday_evening" data-day="Tuesday" data-slot="Evening" >
-                                        <span class="vh">Tuesday, Evening</span>
                                     </label>
                                 </td>
                                                     </tr>
@@ -431,12 +633,6 @@
                                         <span class="vh">Wednesday, Afternoon</span>
                                     </label>
                                 </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="wednesday_evening" data-day="Wednesday" data-slot="Evening" >
-                                        <span class="vh">Wednesday, Evening</span>
-                                    </label>
-                                </td>
                                                     </tr>
                                             <tr>
                             <th scope="row">Thursday</th>
@@ -450,12 +646,6 @@
                                     <label class="slot">
                                         <input type="checkbox" name="availability[]" value="thursday_afternoon" data-day="Thursday" data-slot="Afternoon" >
                                         <span class="vh">Thursday, Afternoon</span>
-                                    </label>
-                                </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="thursday_evening" data-day="Thursday" data-slot="Evening" >
-                                        <span class="vh">Thursday, Evening</span>
                                     </label>
                                 </td>
                                                     </tr>
@@ -473,12 +663,6 @@
                                         <span class="vh">Friday, Afternoon</span>
                                     </label>
                                 </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="friday_evening" data-day="Friday" data-slot="Evening" >
-                                        <span class="vh">Friday, Evening</span>
-                                    </label>
-                                </td>
                                                     </tr>
                                             <tr>
                             <th scope="row">Saturday</th>
@@ -492,12 +676,6 @@
                                     <label class="slot">
                                         <input type="checkbox" name="availability[]" value="saturday_afternoon" data-day="Saturday" data-slot="Afternoon" >
                                         <span class="vh">Saturday, Afternoon</span>
-                                    </label>
-                                </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="saturday_evening" data-day="Saturday" data-slot="Evening" >
-                                        <span class="vh">Saturday, Evening</span>
                                     </label>
                                 </td>
                                                     </tr>
@@ -515,17 +693,19 @@
                                         <span class="vh">Sunday, Afternoon</span>
                                     </label>
                                 </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="sunday_evening" data-day="Sunday" data-slot="Evening" >
-                                        <span class="vh">Sunday, Evening</span>
-                                    </label>
-                                </td>
                                                     </tr>
                                     </tbody>
             </table>
             </div>
                     </div>
+        <fieldset id="service_mode" data-review >
+        <legend>Service mode</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="radio" name="service_mode" value="online" > <span>Online</span></label>
+                            <label class="choice"><input type="radio" name="service_mode" value="in_person" > <span>In person</span></label>
+                            <label class="choice"><input type="radio" name="service_mode" value="either" > <span>Either</span></label>
+                    </div>
+            </fieldset>
         </section>
 
         <section class="step " id="help" data-step="help" aria-labelledby="help-title">

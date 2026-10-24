@@ -7,13 +7,16 @@ import thanksEn from "./snap/thanks.en.html";
 import thanksZh from "./snap/thanks.zh_TW.html";
 import privacyEn from "./snap/privacy.en.html";
 import privacyZh from "./snap/privacy.zh_TW.html";
+import formFr from "./snap/form.fr.html";
+import thanksFr from "./snap/thanks.fr.html";
+import privacyFr from "./snap/privacy.fr.html";
 
 const PAGES = {
-  form: { en: formEn, zh_TW: formZh },
-  thanks: { en: thanksEn, zh_TW: thanksZh },
-  privacy: { en: privacyEn, zh_TW: privacyZh },
+  form: { en: formEn, zh_TW: formZh, fr: formFr },
+  thanks: { en: thanksEn, zh_TW: thanksZh, fr: thanksFr },
+  privacy: { en: privacyEn, zh_TW: privacyZh, fr: privacyFr },
 };
-const LOCALES = ["en", "zh_TW"];
+const LOCALES = ["en", "zh_TW", "fr"];
 const O = generated.options;
 const PHONE = /^[0-9+().\-\s]{7,32}$/;
 const POSTAL = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
@@ -22,7 +25,7 @@ const ARRAYS = ["languages", "interests", "programs"];
 // Fields the error summary can link to (same list as the app's form view).
 const ANCHORS = ["first_name", "last_name", "phone", "email", "gender", "city", "province", "postal_code",
   "current_status", "current_status_other", "languages", "languages_other", "backgrounds", "availability",
-  "interests", "programs", "message", "newsletter_opt_in"];
+  "education", "skills", "skills_other", "service_mode", "interests", "programs", "message", "newsletter_opt_in"];
 
 const HTML_HEADERS = {
   "content-type": "text/html; charset=utf-8",
@@ -58,15 +61,9 @@ function redirect(location, cookieHeaders = []) {
 }
 
 const localeCookie = (l) => `demo_locale=${l}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
-const flashCookie = (o, validate) => {
-  const keep = { ...o };
-  let value = encodeURIComponent(JSON.stringify({ o: keep, v: validate }));
-  if (value.length > 3600) {
-    keep.message = (keep.message || "").slice(0, 100);
-    value = encodeURIComponent(JSON.stringify({ o: keep, v: validate }));
-  }
-  return `demo_flash=${value}; Path=/volunteer; Max-Age=120; SameSite=Lax; Secure; HttpOnly`;
-};
+// Answers stay in the visitor's tab for at most two minutes. Only the step and
+// validation messages cross a redirect in the small, HttpOnly flash cookie.
+const flashCookie = (o, errors = {}) => `demo_flash=${encodeURIComponent(JSON.stringify({ step: o.step, errors }))}; Path=/volunteer; Max-Age=120; SameSite=Lax; Secure; HttpOnly`;
 const clearFlash = "demo_flash=; Path=/volunteer; Max-Age=0; SameSite=Lax; Secure; HttpOnly";
 
 function readAnswers(form) {
@@ -75,21 +72,23 @@ function readAnswers(form) {
   for (const f of ARRAYS) o[f] = form.getAll(f + "[]").map(String);
   o.newsletter_opt_in = form.get("newsletter_opt_in") ? "1" : "";
   o.availability = form.getAll("availability[]").map(String);
-  o.backgrounds = [];
-  for (let i = 0; i < 5; i++) {
-    const prof = form.get(`backgrounds[${i}][profession]`);
-    const org = form.get(`backgrounds[${i}][organization]`);
-    const exp = form.get(`backgrounds[${i}][experience]`);
-    const cert = form.get(`backgrounds[${i}][certifications]`);
-    if (prof || org || exp || cert) {
-      o.backgrounds.push({
-        profession: String(prof ?? "").trim(),
-        organization: String(org ?? "").trim(),
-        experience: String(exp ?? "").trim(),
-        certifications: String(cert ?? "").trim(),
-      });
+  const text = (name) => String(form.get(name) ?? "").trim();
+  const indexes = [...new Set([...form.keys()].map((name) => /^backgrounds\[(\d+)\]/.exec(name)?.[1]).filter(Boolean))];
+  o.backgrounds = indexes.slice(0, 6).map((index) => {
+    const row = {};
+    for (const field of ["organization", "industry", "start_month", "end_month", "is_current", "summary", "management_experience"]) {
+      row[field] = text(`backgrounds[${index}][${field}]`);
     }
-  }
+    row.work_fields = form.getAll(`backgrounds[${index}][work_fields][]`).map(String);
+    if (row.is_current === "yes") row.end_month = "";
+    return row;
+  });
+  o.education = {};
+  for (const field of ["level", "school", "major", "certifications_other"]) o.education[field] = text(`education[${field}]`);
+  o.education.certifications = form.getAll("education[certifications][]").map(String);
+  o.skills = Object.fromEntries(Object.keys(O.skills).map((group) => [group, form.getAll(`skills[${group}][]`).map(String)]));
+  o.skills_other = text("skills_other");
+  o.service_mode = text("service_mode");
   return o;
 }
 
@@ -105,7 +104,7 @@ async function answersFrom(request) {
 function validate(o, locale) {
   const M = generated.messages[locale];
   const e = {};
-  const fail = (field, key) => { if (!e[field]) e[field] = M[key]; };
+  const fail = (field, key) => { if (!e[field]) e[field] = M[key] ? key : "*.in"; };
   const str = (field, max) => {
     if (!o[field]) return fail(field, field + ".required");
     if (len(o[field]) > max) fail(field, field + ".max");
@@ -132,6 +131,34 @@ function validate(o, locale) {
   else if (o.interests.some((v) => !O.interests.includes(v))) fail("interests", "interests.*.in");
   if (o.programs.some((v) => !O.programs.includes(v))) fail("programs", "programs.*.in");
   if (len(o.message) > 2000) fail("message", "message.max");
+  const allowed = (field, value, options) => { if (value && !options.includes(value)) fail(field, "*.in"); };
+  const limit = (field, value, max) => { if (len(value || "") > max) fail(field, "message.max"); };
+  const choices = (field, values, options) => { if (values.some((v) => !options.includes(v))) fail(field, "*.in"); };
+  const month = (value) => /^\d{4}-(0[1-9]|1[0-2])$/.test(value);
+  if (o.backgrounds.length > 5) fail("backgrounds", "backgrounds.max");
+  o.backgrounds.forEach((row, index) => {
+    const key = `backgrounds.${index}`;
+    limit(key + ".organization", row.organization, 160);
+    limit(key + ".industry", row.industry, 160);
+    limit(key + ".summary", row.summary, 2000);
+    allowed(key + ".is_current", row.is_current, ["yes", "no"]);
+    allowed(key + ".management_experience", row.management_experience, O.management_experience);
+    choices(key + ".work_fields", row.work_fields, O.work_fields);
+    for (const field of ["start_month", "end_month"]) {
+      if (row[field] && !month(row[field])) fail(key + "." + field, "backgrounds.*." + field + ".date_format");
+    }
+    if (row.start_month && row.end_month && row.end_month < row.start_month) fail(key + ".end_month", "backgrounds.*.end_month.after_or_equal");
+  });
+  allowed("education.level", o.education.level, O.education_levels);
+  limit("education.school", o.education.school, 255);
+  limit("education.major", o.education.major, 255);
+  limit("education.certifications_other", o.education.certifications_other, 500);
+  choices("education.certifications", o.education.certifications, O.certifications);
+  if (o.education.certifications.includes("other") && !o.education.certifications_other) fail("education.certifications_other", "education.certifications_other.required");
+  for (const [group, options] of Object.entries(O.skills)) choices("skills." + group, o.skills[group], options);
+  limit("skills_other", o.skills_other, 1000);
+  allowed("service_mode", o.service_mode, O.service_modes);
+  choices("availability", o.availability, O.days.flatMap((day) => O.form_slots.map((slot) => day + "_" + slot)));
   return e;
 }
 
@@ -175,13 +202,13 @@ function renderForm(html, locale, old, errors) {
     first_name: 'about', last_name: 'about', phone: 'about', email: 'about', gender: 'about',
     city: 'where', province: 'where', postal_code: 'where',
     current_status: 'background', current_status_other: 'background', languages: 'background', languages_other: 'background',
-    backgrounds: 'availability', availability: 'availability',
+    backgrounds: 'availability', availability: 'availability', education: 'availability', skills: 'availability', skills_other: 'availability', service_mode: 'availability',
     interests: 'help', programs: 'help', message: 'help', newsletter_opt_in: 'help',
   };
-  let activeStep = old.step || "about";
+  let activeStep = SECTIONS.includes(old.step) ? old.step : "about";
   if (has) {
     for (const s of SECTIONS) {
-      if (Object.keys(errors).some((f) => (STEP_OF_FIELD[f] || "review") === s)) {
+      if (Object.keys(errors).some((f) => (STEP_OF_FIELD[f.split(".")[0]] || "review") === s)) {
         activeStep = s;
         break;
       }
@@ -231,9 +258,9 @@ function renderForm(html, locale, old, errors) {
 
   if (has) {
     const items = Object.entries(errors)
-      .map(([f, m]) => `<li>${ANCHORS.includes(f) ? `<a href="#${f}">${esc(m)}</a>` : esc(m)}</li>`).join("");
+      .map(([f, m]) => `<li>${ANCHORS.includes(f.split(".")[0]) ? `<a href="#${f.split(".")[0]}">${esc(m)}</a>` : esc(m)}</li>`).join("");
     const summary = `<div class="errors" role="alert" aria-labelledby="error-summary-title"><h2 id="error-summary-title">${esc(E.summary)}</h2><ul>${items}</ul></div>`;
-    rw.on("p.note", { element(el) { el.before(summary, { html: true }); } });
+    rw.on(".sheet", { element(el) { el.prepend(summary, { html: true }); } });
     rw.on("div.page", { element(el) { el.setAttribute("class", "page has-errors"); } });
     html = html.replace("<title>", "<title>" + esc(E.titlePrefix));
   }
@@ -255,21 +282,23 @@ export default {
         const raw = cookies(request).demo_flash;
         let flash = null;
         try { flash = raw ? JSON.parse(decodeURIComponent(raw)) : null; } catch { /* ignore a damaged cookie */ }
-        const old = flash?.o || {};
-        const res = renderForm(PAGES.form[locale], locale, old, flash?.v ? validate({ ...blank(), ...old }, locale) : {});
+        const old = { step: flash?.step };
+        const errors = Object.fromEntries(Object.entries(flash?.errors || {}).map(([field, key]) => [field, generated.messages[locale][key] || generated.messages[locale]["*.in"]]));
+        const res = renderForm(PAGES.form[locale], locale, old, errors);
         if (raw) res.headers.append("set-cookie", clearFlash);
         return res;
       }
       if (request.method === "POST") {
         const old = await answersFrom(request);
-        if (Object.keys(validate(old, locale)).length) return redirect("/volunteer/signup", [flashCookie(old, true)]);
+        const errors = validate(old, locale);
+        if (Object.keys(errors).length) return redirect("/volunteer/signup", [flashCookie(old, errors)]);
         return redirect("/volunteer/signup/thanks");
       }
     }
-    if ((m = path.match(/^\/volunteer\/signup\/locale\/(en|zh_TW)$/)) && request.method === "POST") {
-      return redirect("/volunteer/signup", [localeCookie(m[1]), flashCookie(await answersFrom(request), false)]);
+    if ((m = path.match(/^\/volunteer\/signup\/locale\/(en|zh_TW|fr)$/)) && request.method === "POST") {
+      return redirect("/volunteer/signup", [localeCookie(m[1]), flashCookie(await answersFrom(request))]);
     }
-    if ((m = path.match(/^\/locale\/(en|zh_TW)$/)) && request.method === "POST") {
+    if ((m = path.match(/^\/locale\/(en|zh_TW|fr)$/)) && request.method === "POST") {
       const back = new URL(request.headers.get("referer") || "/volunteer/privacy", url);
       return redirect(back.origin === url.origin ? back.pathname : "/volunteer/privacy", [localeCookie(m[1])]);
     }

@@ -27,10 +27,11 @@
         .progress, .progress-text, .step-nav .back, .step-nav .next, [data-bg-add], [data-bg-remove] { display: none !important; }
         .step-nav .submit { display: inline-flex !important; }
     </style></noscript>
-    <script src="/volunteer/assets/signup.js" defer></script>
+    <script src="/volunteer/assets/signup-state.js" defer></script>
+<script src="/volunteer/assets/signup.js" defer></script>
 </head>
 <body>
-<p class="demo-banner" role="note">示範頁面。您在此填寫的內容不會被送出或儲存。</p>
+<p class="demo-banner" role="note">示範頁面。申請資料不會儲存至伺服器。</p>
 
 <form method="POST" action="/volunteer/signup" novalidate>
         <button type="submit" class="default-submit" tabindex="-1" aria-hidden="true"></button>
@@ -43,6 +44,7 @@
             <nav class="lang" aria-label="語言">
                                                             <span><button type="submit" formaction="/volunteer/signup/locale/en" formnovalidate lang="en" >English</button></span>
                                                                                 <span><button type="submit" formaction="/volunteer/signup/locale/zh_TW" formnovalidate lang="zh-Hant"  aria-current="true" >繁體中文</button></span>
+                                                                                <span><button type="submit" formaction="/volunteer/signup/locale/fr" formnovalidate lang="fr" >Français</button></span>
                                                 </nav>
         </div>
     </header>
@@ -113,37 +115,37 @@
         <div class="sheet">
         <ol class="progress" data-progress aria-label="表單各部分">
                             <li class="is-current" data-progress-step="about"  aria-current="step" >
-                    <a href="#about">
+                    <a href="#about" aria-label="關於您">
                         <span class="dot" aria-hidden="true">1</span>
                         <span class="lbl">關於您</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="where" >
-                    <a href="#where">
+                    <a href="#where" aria-label="您的所在地">
                         <span class="dot" aria-hidden="true">2</span>
                         <span class="lbl">您的所在地</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="background" >
-                    <a href="#background">
+                    <a href="#background" aria-label="背景資料">
                         <span class="dot" aria-hidden="true">3</span>
                         <span class="lbl">背景資料</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="availability" >
-                    <a href="#availability">
+                    <a href="#availability" aria-label="可服務時間">
                         <span class="dot" aria-hidden="true">4</span>
                         <span class="lbl">可服務時間</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="help" >
-                    <a href="#help">
+                    <a href="#help" aria-label="您想如何參與">
                         <span class="dot" aria-hidden="true">5</span>
                         <span class="lbl">您想如何參與</span>
                     </a>
                 </li>
                             <li class="" data-progress-step="review" >
-                    <a href="#review">
+                    <a href="#review" aria-label="檢查並送出">
                         <span class="dot" aria-hidden="true">6</span>
                         <span class="lbl">檢查並送出</span>
                     </a>
@@ -259,102 +261,315 @@
         <div class="panel" id="backgrounds" data-bg-list data-max="5" >
             <div class="panel-head">
                 <span class="panel-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></span>
-                <h3>專業背景 <span class="optional">(選填)</span></h3>
+                <h3>工作經驗 <span class="optional">(選填)</span></h3>
             </div>
             <div class="panel-body">
                                 <div data-bg-rows>
-                                            <div class="bg-row" data-bg-row data-review data-review-type="background" data-review-label="背景 1">
-    <div class="bg-row-head"  hidden >
-        <span class="bg-row-title" data-bg-title data-pattern="背景 :number">背景 1</span>
+                                            <div class="bg-row" data-bg-row data-review data-review-type="background">
+    <div class="bg-row-head">
+        <span class="bg-row-title" data-bg-title data-pattern="工作經驗 :number">工作經驗 1</span>
         <button type="button" class="link-button" data-bg-remove>移除</button>
     </div>
-    <div class="row three">
-        <div class="field">
-            <label for="backgrounds-0-profession">職業／專長</label>
-            <select id="backgrounds-0-profession" name="backgrounds[0][profession]" aria-invalid="false" >
+    <div class="row two">
+                    <div class="field" data-review>
+        <label for="backgrounds-0-organization">服務機構名稱</label>
+                    <input id="backgrounds-0-organization" name="backgrounds[0][organization]" type="text" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-0-industry">產業類別</label>
+                    <input id="backgrounds-0-industry" name="backgrounds[0][industry]" type="text" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-0-start_month">起始年月</label>
+                    <input id="backgrounds-0-start_month" name="backgrounds[0][start_month]" type="month" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-0-end_month">結束年月</label>
+                    <input id="backgrounds-0-end_month" name="backgrounds[0][end_month]" type="month" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+            </div>
+    <p class="note">若為現職，結束年月請留空。</p>
+    <div class="row two">
+        <div class="field" data-review>
+        <label for="backgrounds-0-is_current">現職</label>
+                    <select id="backgrounds-0-is_current" name="backgrounds[0][is_current]" aria-invalid="false" >
                 <option value="">- 請選擇 -</option>
-                                    <option value="healthcare" >醫療保健</option>
-                                    <option value="education" >教育與培訓</option>
-                                    <option value="technology" >資訊科技</option>
-                                    <option value="engineering" >工程與營建</option>
-                                    <option value="business" >商業、金融與行政</option>
-                                    <option value="legal" >法律與公共服務</option>
-                                    <option value="arts_media" >藝術、媒體與傳播</option>
-                                    <option value="trades" >技術工與製造業</option>
-                                    <option value="hospitality" >餐飲、旅宿與零售</option>
-                                    <option value="social_services" >社會與社區服務</option>
-                                    <option value="other" >其他</option>
+                                    <option value="yes" >是</option>
+                                    <option value="no" >否</option>
                             </select>
                     </div>
-        <div class="field">
-            <label for="backgrounds-0-organization">機構／公司</label>
-            <input id="backgrounds-0-organization" name="backgrounds[0][organization]" type="text" value="" maxlength="160" autocomplete="organization" placeholder="例如：公司或機構名稱" aria-invalid="false" >
-                    </div>
-        <div class="field">
-            <label for="backgrounds-0-experience">經驗年資</label>
-            <select id="backgrounds-0-experience" name="backgrounds[0][experience]" aria-invalid="false" >
+        <div class="field" data-review>
+        <label for="backgrounds-0-management_experience">管理經驗（年數）</label>
+                    <select id="backgrounds-0-management_experience" name="backgrounds[0][management_experience]" aria-invalid="false" >
                 <option value="">- 請選擇 -</option>
-                                    <option value="under_1" >不到 1 年</option>
-                                    <option value="1_3" >1–3 年</option>
-                                    <option value="4_10" >4–10 年</option>
-                                    <option value="over_10" >10 年以上</option>
+                                    <option value="none" >無</option>
+                                    <option value="1_3" >1-3年</option>
+                                    <option value="3_5" >3-5年</option>
+                                    <option value="over_5" >5年以上</option>
                             </select>
                     </div>
     </div>
-    <div class="field">
-        <label for="backgrounds-0-certifications">證照、執照或相關訓練（選填）</label>
-        <input id="backgrounds-0-certifications" name="backgrounds[0][certifications]" type="text" value="" maxlength="255" placeholder="例如：急救、教師資格、食品安全等" aria-invalid="false" >
-            </div>
+    <div class="field" data-review>
+        <label for="backgrounds-0-summary">工作內容摘要</label>
+                    <textarea id="backgrounds-0-summary" name="backgrounds[0][summary]" rows="3" maxlength="2000" aria-invalid="false" ></textarea>
+                    </div>
+    <fieldset id="backgrounds-0-work_fields" data-review >
+        <legend>工作領域（可複選）</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="education" > <span>教育</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="medicine" > <span>醫療</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="nursing" > <span>護理</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="social_work" > <span>社工</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="counselling" > <span>心理諮商</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="law" > <span>法律</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="accounting" > <span>財務會計</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="human_resources" > <span>人力資源</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="marketing" > <span>行銷企劃</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="events" > <span>活動企劃</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="project_management" > <span>專案管理</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="it" > <span>資訊科技</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="ai" > <span>AI應用</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="web" > <span>網頁開發</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="graphic_design" > <span>平面設計</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="video" > <span>影片製作</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="translation" > <span>翻譯</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[0][work_fields][]" value="other" > <span>其他</span></label>
+                    </div>
+            </fieldset>
 </div>
                                     </div>
                 <template data-bg-template>
-                    <div class="bg-row" data-bg-row data-review data-review-type="background" data-review-label="背景 __NUMBER__">
-    <div class="bg-row-head" >
-        <span class="bg-row-title" data-bg-title data-pattern="背景 :number">背景 __NUMBER__</span>
+                    <div class="bg-row" data-bg-row data-review data-review-type="background">
+    <div class="bg-row-head">
+        <span class="bg-row-title" data-bg-title data-pattern="工作經驗 :number">工作經驗 __NUMBER__</span>
         <button type="button" class="link-button" data-bg-remove>移除</button>
     </div>
-    <div class="row three">
-        <div class="field">
-            <label for="backgrounds-__INDEX__-profession">職業／專長</label>
-            <select id="backgrounds-__INDEX__-profession" name="backgrounds[__INDEX__][profession]" aria-invalid="false" >
+    <div class="row two">
+                    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-organization">服務機構名稱</label>
+                    <input id="backgrounds-__INDEX__-organization" name="backgrounds[__INDEX__][organization]" type="text" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-industry">產業類別</label>
+                    <input id="backgrounds-__INDEX__-industry" name="backgrounds[__INDEX__][industry]" type="text" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-start_month">起始年月</label>
+                    <input id="backgrounds-__INDEX__-start_month" name="backgrounds[__INDEX__][start_month]" type="month" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+                    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-end_month">結束年月</label>
+                    <input id="backgrounds-__INDEX__-end_month" name="backgrounds[__INDEX__][end_month]" type="month" value="" maxlength="160" aria-invalid="false" >
+                    </div>
+            </div>
+    <p class="note">若為現職，結束年月請留空。</p>
+    <div class="row two">
+        <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-is_current">現職</label>
+                    <select id="backgrounds-__INDEX__-is_current" name="backgrounds[__INDEX__][is_current]" aria-invalid="false" >
                 <option value="">- 請選擇 -</option>
-                                    <option value="healthcare" >醫療保健</option>
-                                    <option value="education" >教育與培訓</option>
-                                    <option value="technology" >資訊科技</option>
-                                    <option value="engineering" >工程與營建</option>
-                                    <option value="business" >商業、金融與行政</option>
-                                    <option value="legal" >法律與公共服務</option>
-                                    <option value="arts_media" >藝術、媒體與傳播</option>
-                                    <option value="trades" >技術工與製造業</option>
-                                    <option value="hospitality" >餐飲、旅宿與零售</option>
-                                    <option value="social_services" >社會與社區服務</option>
-                                    <option value="other" >其他</option>
+                                    <option value="yes" >是</option>
+                                    <option value="no" >否</option>
                             </select>
                     </div>
-        <div class="field">
-            <label for="backgrounds-__INDEX__-organization">機構／公司</label>
-            <input id="backgrounds-__INDEX__-organization" name="backgrounds[__INDEX__][organization]" type="text" value="" maxlength="160" autocomplete="organization" placeholder="例如：公司或機構名稱" aria-invalid="false" >
-                    </div>
-        <div class="field">
-            <label for="backgrounds-__INDEX__-experience">經驗年資</label>
-            <select id="backgrounds-__INDEX__-experience" name="backgrounds[__INDEX__][experience]" aria-invalid="false" >
+        <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-management_experience">管理經驗（年數）</label>
+                    <select id="backgrounds-__INDEX__-management_experience" name="backgrounds[__INDEX__][management_experience]" aria-invalid="false" >
                 <option value="">- 請選擇 -</option>
-                                    <option value="under_1" >不到 1 年</option>
-                                    <option value="1_3" >1–3 年</option>
-                                    <option value="4_10" >4–10 年</option>
-                                    <option value="over_10" >10 年以上</option>
+                                    <option value="none" >無</option>
+                                    <option value="1_3" >1-3年</option>
+                                    <option value="3_5" >3-5年</option>
+                                    <option value="over_5" >5年以上</option>
                             </select>
                     </div>
     </div>
-    <div class="field">
-        <label for="backgrounds-__INDEX__-certifications">證照、執照或相關訓練（選填）</label>
-        <input id="backgrounds-__INDEX__-certifications" name="backgrounds[__INDEX__][certifications]" type="text" value="" maxlength="255" placeholder="例如：急救、教師資格、食品安全等" aria-invalid="false" >
-            </div>
+    <div class="field" data-review>
+        <label for="backgrounds-__INDEX__-summary">工作內容摘要</label>
+                    <textarea id="backgrounds-__INDEX__-summary" name="backgrounds[__INDEX__][summary]" rows="3" maxlength="2000" aria-invalid="false" ></textarea>
+                    </div>
+    <fieldset id="backgrounds-__INDEX__-work_fields" data-review >
+        <legend>工作領域（可複選）</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="education" > <span>教育</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="medicine" > <span>醫療</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="nursing" > <span>護理</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="social_work" > <span>社工</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="counselling" > <span>心理諮商</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="law" > <span>法律</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="accounting" > <span>財務會計</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="human_resources" > <span>人力資源</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="marketing" > <span>行銷企劃</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="events" > <span>活動企劃</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="project_management" > <span>專案管理</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="it" > <span>資訊科技</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="ai" > <span>AI應用</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="web" > <span>網頁開發</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="graphic_design" > <span>平面設計</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="video" > <span>影片製作</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="translation" > <span>翻譯</span></label>
+                            <label class="choice"><input type="checkbox" name="backgrounds[__INDEX__][work_fields][]" value="other" > <span>其他</span></label>
+                    </div>
+            </fieldset>
 </div>
                 </template>
-                <button type="button" class="button-outline" data-bg-add><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> 新增另一項背景</button>
+                <button type="button" class="button-outline" data-bg-add><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> 新增工作經驗</button>
             </div>
         </div>
+
+        <div class="panel" id="education" role="group" aria-labelledby="education-title">
+    <div class="panel-head"><h3 id="education-title">學歷背景與專業證照</h3></div>
+    <div class="panel-body">
+                <div class="field" data-review>
+        <label for="education-level">最高學歷</label>
+                    <select id="education-level" name="education[level]" aria-invalid="false" >
+                <option value="">- 請選擇 -</option>
+                                    <option value="high_school" >高中職</option>
+                                    <option value="college" >專科</option>
+                                    <option value="university" >大學</option>
+                                    <option value="masters" >碩士</option>
+                                    <option value="doctorate" >博士</option>
+                            </select>
+                    </div>
+        <div class="row two">
+                            <div class="field" data-review>
+        <label for="education-school">學校名稱</label>
+                    <input id="education-school" name="education[school]" type="text" value="" maxlength="255" aria-invalid="false" >
+                    </div>
+                            <div class="field" data-review>
+        <label for="education-major">科系</label>
+                    <input id="education-major" name="education[major]" type="text" value="" maxlength="255" aria-invalid="false" >
+                    </div>
+                    </div>
+        <fieldset id="education-certifications" data-review >
+        <legend>專業證照（可複選）</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="pmp" > <span>PMP</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="capm" > <span>CAPM</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="nurse" > <span>護理師</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="social_worker" > <span>社工師</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="teacher" > <span>教師證</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="accountant" > <span>會計師</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="lawyer" > <span>律師</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="google" > <span>Google Certificate</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="microsoft" > <span>Microsoft Certificate</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="ai" > <span>AI相關證照</span></label>
+                            <label class="choice"><input type="checkbox" name="education[certifications][]" value="other" > <span>其他</span></label>
+                    </div>
+            </fieldset>
+        <div class="field" data-review>
+        <label for="education-certifications_other">其他證照，請說明</label>
+                    <input id="education-certifications_other" name="education[certifications_other]" type="text" value="" maxlength="500" aria-invalid="false" >
+                    </div>
+    </div>
+</div>
+<div class="panel" id="skills" role="group" aria-labelledby="skills-title">
+    <div class="panel-head"><h3 id="skills-title">專業技能</h3></div>
+    <div class="panel-body">
+        <p class="note">以下資料為選填，專業技能可複選。</p>
+                            <fieldset id="skills-administration" data-review >
+        <legend>行政相關</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[administration][]" value="word_processing" > <span>文書處理</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[administration][]" value="minutes" > <span>會議紀錄</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[administration][]" value="administration" > <span>行政管理</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[administration][]" value="official_writing" > <span>公文撰寫</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-project_management" data-review >
+        <legend>專案管理</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[project_management][]" value="project_management" > <span>專案管理</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[project_management][]" value="pmo" > <span>PMO</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[project_management][]" value="scrum" > <span>Scrum</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[project_management][]" value="agile" > <span>Agile</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-it" data-review >
+        <legend>資訊科技</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="systems_analysis" > <span>系統分析</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="programming" > <span>程式開發</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="websites" > <span>網站建置</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="databases" > <span>資料庫管理</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[it][]" value="security" > <span>資安管理</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-ai" data-review >
+        <legend>AI能力</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="chatgpt" > <span>ChatGPT</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="copilot" > <span>Microsoft Copilot</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="ai_agent" > <span>AI Agent</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="prompt_engineering" > <span>Prompt Engineering</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[ai][]" value="gemini" > <span>Gemini</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-design" data-review >
+        <legend>設計能力</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[design][]" value="canva" > <span>Canva</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[design][]" value="photoshop" > <span>Photoshop</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[design][]" value="illustrator" > <span>Illustrator</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[design][]" value="video_editing" > <span>影片剪輯</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-media" data-review >
+        <legend>設計與媒體</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="visual_design" > <span>美編設計</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="canva" > <span>Canva</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="photoshop" > <span>Photoshop</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="illustrator" > <span>Illustrator</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="graphic_design" > <span>平面設計</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="banners" > <span>Banner設計</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="posters" > <span>海報設計</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="edm_design" > <span>EDM設計</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="video_editing" > <span>影片剪輯</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="photography" > <span>攝影</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[media][]" value="videography" > <span>錄影</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-marketing" data-review >
+        <legend>行銷推廣</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="facebook" > <span>Facebook 經營</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="social_media" > <span>社群經營</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="google_ads" > <span>Google Ads</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="seo" > <span>SEO</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="email_marketing" > <span>EDM行銷</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[marketing][]" value="copywriting" > <span>文案撰寫</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-training" data-review >
+        <legend>教育培訓</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[training][]" value="course_design" > <span>課程設計</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[training][]" value="teaching" > <span>講師授課</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[training][]" value="materials" > <span>教材編製</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[training][]" value="workshops" > <span>工作坊帶領</span></label>
+                    </div>
+            </fieldset>
+                    <fieldset id="skills-medical" data-review >
+        <legend>醫療專業類別</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="physician" > <span>醫師</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="nursing" > <span>護理</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="pharmacy" > <span>藥事</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="medical_technology" > <span>醫事技術</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="rehabilitation" > <span>復健治療</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="counselling" > <span>心理諮商</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="public_health" > <span>公共衛生</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="long_term_care" > <span>長照照護</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="social_welfare" > <span>社會福利</span></label>
+                            <label class="choice"><input type="checkbox" name="skills[medical][]" value="medical_administration" > <span>醫療行政</span></label>
+                    </div>
+            </fieldset>
+                <div class="field" data-review>
+        <label for="skills_other">其他專長</label>
+                    <textarea id="skills_other" name="skills_other" rows="3" maxlength="1000" aria-invalid="false" ></textarea>
+                    </div>
+    </div>
+</div>
 
         <div class="panel" id="availability-grid" role="group" aria-labelledby="availability-grid-title" data-review data-review-type="availability" data-review-label="可服務時間">
             <div class="panel-head">
@@ -369,9 +584,8 @@
                 <thead>
                     <tr>
                         <th scope="col" class="day-col">星期</th>
-                                                    <th scope="col">上午<span class="times">(8:00–12:00)</span></th>
-                                                    <th scope="col">下午<span class="times">(12:00–17:00)</span></th>
-                                                    <th scope="col">晚上<span class="times">(17:00–21:00)</span></th>
+                                                    <th scope="col">上午</th>
+                                                    <th scope="col">下午</th>
                                             </tr>
                 </thead>
                 <tbody>
@@ -389,12 +603,6 @@
                                         <span class="vh">星期一, 下午</span>
                                     </label>
                                 </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="monday_evening" data-day="星期一" data-slot="晚上" >
-                                        <span class="vh">星期一, 晚上</span>
-                                    </label>
-                                </td>
                                                     </tr>
                                             <tr>
                             <th scope="row">星期二</th>
@@ -408,12 +616,6 @@
                                     <label class="slot">
                                         <input type="checkbox" name="availability[]" value="tuesday_afternoon" data-day="星期二" data-slot="下午" >
                                         <span class="vh">星期二, 下午</span>
-                                    </label>
-                                </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="tuesday_evening" data-day="星期二" data-slot="晚上" >
-                                        <span class="vh">星期二, 晚上</span>
                                     </label>
                                 </td>
                                                     </tr>
@@ -431,12 +633,6 @@
                                         <span class="vh">星期三, 下午</span>
                                     </label>
                                 </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="wednesday_evening" data-day="星期三" data-slot="晚上" >
-                                        <span class="vh">星期三, 晚上</span>
-                                    </label>
-                                </td>
                                                     </tr>
                                             <tr>
                             <th scope="row">星期四</th>
@@ -450,12 +646,6 @@
                                     <label class="slot">
                                         <input type="checkbox" name="availability[]" value="thursday_afternoon" data-day="星期四" data-slot="下午" >
                                         <span class="vh">星期四, 下午</span>
-                                    </label>
-                                </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="thursday_evening" data-day="星期四" data-slot="晚上" >
-                                        <span class="vh">星期四, 晚上</span>
                                     </label>
                                 </td>
                                                     </tr>
@@ -473,12 +663,6 @@
                                         <span class="vh">星期五, 下午</span>
                                     </label>
                                 </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="friday_evening" data-day="星期五" data-slot="晚上" >
-                                        <span class="vh">星期五, 晚上</span>
-                                    </label>
-                                </td>
                                                     </tr>
                                             <tr>
                             <th scope="row">星期六</th>
@@ -492,12 +676,6 @@
                                     <label class="slot">
                                         <input type="checkbox" name="availability[]" value="saturday_afternoon" data-day="星期六" data-slot="下午" >
                                         <span class="vh">星期六, 下午</span>
-                                    </label>
-                                </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="saturday_evening" data-day="星期六" data-slot="晚上" >
-                                        <span class="vh">星期六, 晚上</span>
                                     </label>
                                 </td>
                                                     </tr>
@@ -515,17 +693,19 @@
                                         <span class="vh">星期日, 下午</span>
                                     </label>
                                 </td>
-                                                            <td>
-                                    <label class="slot">
-                                        <input type="checkbox" name="availability[]" value="sunday_evening" data-day="星期日" data-slot="晚上" >
-                                        <span class="vh">星期日, 晚上</span>
-                                    </label>
-                                </td>
                                                     </tr>
                                     </tbody>
             </table>
             </div>
                     </div>
+        <fieldset id="service_mode" data-review >
+        <legend>服務方式</legend>
+        <div class="choices cols">
+                            <label class="choice"><input type="radio" name="service_mode" value="online" > <span>線上服務</span></label>
+                            <label class="choice"><input type="radio" name="service_mode" value="in_person" > <span>實體服務</span></label>
+                            <label class="choice"><input type="radio" name="service_mode" value="either" > <span>皆可</span></label>
+                    </div>
+            </fieldset>
         </section>
 
         <section class="step " id="help" data-step="help" aria-labelledby="help-title">
