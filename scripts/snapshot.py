@@ -6,10 +6,11 @@ APP = os.environ.get("APP_URL", "http://127.0.0.1:8000")
 APP_DIR = os.environ.get("APP_DIR", os.path.normpath(os.path.join(ROOT, "..", "portal")))
 SITE = os.environ.get("SITE_URL", "https://tzuchi.devin.tw")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOCALES = ["en", "zh_TW"]
+LOCALES = ["en", "zh_TW", "fr"]
 BANNER = {
-    "en": "Demonstration page. Nothing you enter here is sent or saved.",
-    "zh_TW": "示範頁面。您在此填寫的內容不會被送出或儲存。",
+    "en": "Applications submitted here are handled by volunteer services.",
+    "zh_TW": "此處提交的申請將由志工團隊進行處理。",
+    "fr": "Les candidatures soumises ici sont traitées par le service des bénévoles.",
 }
 
 
@@ -33,7 +34,11 @@ def transform(html, locale):
     html = re.sub(r'<div class="brand">(.*?)</div>', r'<a class="brand" href="/">\1</a>', html, count=1, flags=re.S)
     html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n    <meta name="robots" content="noindex, nofollow">', 1)
     html = re.sub(r"(<body[^>]*>)", lambda m: m.group(1) + '\n<p class="demo-banner" role="note">%s</p>' % BANNER[locale], html, count=1)
-    html = re.sub(r'\s*<span><button type="submit" formaction="/volunteer/signup/locale/fr".*?</button></span>', "", html, flags=re.S)
+    html = html.replace("</head>", '<script src="/volunteer/assets/signup-state.js" defer></script>\n</head>')
+    # Restore answers before the wizard initializes.
+    html = html.replace('<script src="/volunteer/assets/signup.js" defer></script>', '<script src="/volunteer/assets/signup-state.js" defer></script>\n<script src="/volunteer/assets/signup.js" defer></script>')
+    if html.count('src="/volunteer/assets/signup-state.js"') > 1:
+        html = html.replace('<script src="/volunteer/assets/signup-state.js" defer></script>\n</head>', "</head>")
     html = receipts_look(html)
     assert "127.0.0.1" not in html, "app URL left in the snapshot"
     return html
@@ -46,8 +51,6 @@ def receipts_look(html):
     html = re.sub(r"/css/receipts\.css\?v=\d+", "/volunteer/assets/receipts.css", html)
     html = re.sub(r'<input[^>]*name="_token"[^>]*>', "", html)
     html = html.replace(APP, "")
-    # The French button has no page behind it in the demo.
-    html = re.sub(r'\s*<form method="POST" action="/locale/fr">.*?</form>', "", html, flags=re.S)
     return html
 
 
@@ -94,13 +97,11 @@ def main():
     generated = {"messages": {}, "errors": {}}
     for locale in LOCALES:
         lang = php_json('echo json_encode(require "lang/%s/signup.php");' % locale)
-        generated["messages"][locale] = flatten(lang["validation"])
+        profile = php_json('echo json_encode(require "lang/%s/signup_professional.php");' % locale)
+        generated["messages"][locale] = {**flatten(lang["validation"]), **flatten(profile["validation"])}
         generated["errors"][locale] = {"summary": lang["errors"]["summary"], "titlePrefix": lang["errors"]["title_prefix"]}
-    options = open(os.path.join(APP_DIR, "app/Support/SignupOptions.php")).read()
-    generated["options"] = {
-        name.lower(): re.findall(r"'([^']+)'", body)
-        for name, body in re.findall(r"public const ([A-Z_]+) = \[(.*?)\];", options, re.S)
-    }
+    options = php_json('require "app/Support/SignupOptions.php"; echo json_encode((new ReflectionClass("App\\Support\\SignupOptions"))->getConstants());')
+    generated["options"] = {name.lower(): value for name, value in options.items() if isinstance(value, (list, dict))}
     with open(os.path.join(ROOT, "src/generated.json"), "w") as f:
         json.dump(generated, f, ensure_ascii=False, indent=1)
 
@@ -125,6 +126,10 @@ def main():
     with open(os.path.join(ROOT, "public/volunteer/assets/receipts.css"), "w") as f:
         f.write(receipts)
     shutil.copyfile(os.path.join(APP_DIR, "public/img/receipts-temple.webp"), os.path.join(ROOT, "public/img/receipts-temple.webp"))
+
+    if os.environ.get("VOLUNTEER_ONLY"):
+        print("volunteer snapshots written")
+        return
 
     for route, folder in AUTH_PAGES.items():
         page = urllib.request.urlopen(APP + route).read().decode()

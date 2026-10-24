@@ -37,7 +37,12 @@
    "backgrounds.*.experience.in": "Please choose your years of experience from the list.",
    "backgrounds.*.certifications.max": "Please keep this under 255 characters.",
    "availability.*.in": "Please choose times from the grid.",
-   "message.max": "Your message is a little long. Please keep it under 2,000 characters."
+   "message.max": "Your message is a little long. Please keep it under 2,000 characters.",
+   "backgrounds.*.start_month.date_format": "Please use a valid month (YYYY-MM).",
+   "backgrounds.*.end_month.date_format": "Please use a valid month (YYYY-MM).",
+   "backgrounds.*.end_month.after_or_equal": "The end month must be on or after the start month.",
+   "education.certifications_other.required": "Please describe your other certification.",
+   "*.in": "Please choose one of the listed options."
   },
   "zh_TW": {
    "first_name.required": "請告訴我們您的名字。",
@@ -76,7 +81,56 @@
    "backgrounds.*.experience.in": "請從清單中選擇經驗年資。",
    "backgrounds.*.certifications.max": "請控制在 255 字以內。",
    "availability.*.in": "請從表格中選擇時段。",
-   "message.max": "留言稍長了一些，請控制在 2,000 字以內。"
+   "message.max": "留言稍長了一些，請控制在 2,000 字以內。",
+   "backgrounds.*.start_month.date_format": "請填寫有效年月（YYYY-MM）。",
+   "backgrounds.*.end_month.date_format": "請填寫有效年月（YYYY-MM）。",
+   "backgrounds.*.end_month.after_or_equal": "結束年月不得早於起始年月。",
+   "education.certifications_other.required": "請說明其他專業證照。",
+   "*.in": "請選擇表單列出的選項。"
+  },
+  "fr": {
+   "first_name.required": "Veuillez indiquer votre prénom.",
+   "first_name.max": "Votre prénom est un peu long. Veuillez ne pas dépasser 255 caractères.",
+   "last_name.required": "Veuillez indiquer votre nom de famille.",
+   "last_name.max": "Votre nom de famille est un peu long. Veuillez ne pas dépasser 255 caractères.",
+   "phone.required": "Veuillez indiquer un numéro de téléphone où nous pouvons vous joindre.",
+   "phone.regex": "Veuillez vérifier votre numéro de téléphone. Il devrait ressembler à 604-555-0123.",
+   "email.required": "Veuillez indiquer votre adresse courriel.",
+   "email.email": "Veuillez vérifier votre adresse courriel. Elle devrait ressembler à nom@example.com.",
+   "email.max": "Votre adresse courriel est un peu longue. Veuillez ne pas dépasser 255 caractères.",
+   "gender.required": "Veuillez choisir votre genre.",
+   "gender.in": "Veuillez choisir votre genre.",
+   "city.required": "Veuillez indiquer la ville où vous habitez.",
+   "city.max": "Le nom de votre ville est un peu long. Veuillez ne pas dépasser 120 caractères.",
+   "province.required": "Veuillez choisir votre province ou territoire.",
+   "province.in": "Veuillez choisir votre province ou territoire.",
+   "postal_code.required": "Veuillez indiquer votre code postal.",
+   "postal_code.regex": "Veuillez vérifier votre code postal. Il devrait ressembler à V6B 1A1.",
+   "current_status.required": "Veuillez choisir le statut qui vous correspond le mieux.",
+   "current_status.in": "Veuillez choisir le statut qui vous correspond le mieux.",
+   "current_status_other.required_if": "Veuillez préciser votre statut actuel.",
+   "current_status_other.max": "Veuillez ne pas dépasser 255 caractères.",
+   "languages.required": "Veuillez choisir au moins une langue que vous parlez.",
+   "languages.min": "Veuillez choisir au moins une langue que vous parlez.",
+   "languages.*.in": "Veuillez choisir des langues dans la liste.",
+   "languages_other.required": "Veuillez préciser l’autre langue que vous parlez.",
+   "languages_other.max": "Veuillez ne pas dépasser 255 caractères.",
+   "interests.required": "Veuillez choisir au moins une façon dont vous aimeriez aider.",
+   "interests.min": "Veuillez choisir au moins une façon dont vous aimeriez aider.",
+   "interests.*.in": "Veuillez choisir parmi les opportunités de la liste.",
+   "programs.*.in": "Veuillez choisir parmi les programmes de la liste.",
+   "backgrounds.max": "Vous pouvez ajouter jusqu’à 5 parcours.",
+   "backgrounds.*.profession.in": "Veuillez choisir une profession dans la liste.",
+   "backgrounds.*.organization.max": "Veuillez garder le nom de l’organisme sous 160 caractères.",
+   "backgrounds.*.experience.in": "Veuillez choisir vos années d’expérience dans la liste.",
+   "backgrounds.*.certifications.max": "Veuillez garder ce champ sous 255 caractères.",
+   "availability.*.in": "Veuillez choisir des plages horaires dans la grille.",
+   "message.max": "Votre message est un peu long. Veuillez ne pas dépasser 2 000 caractères.",
+   "backgrounds.*.start_month.date_format": "Veuillez indiquer un mois valide (AAAA-MM).",
+   "backgrounds.*.end_month.date_format": "Veuillez indiquer un mois valide (AAAA-MM).",
+   "backgrounds.*.end_month.after_or_equal": "Le mois de fin doit suivre ou correspondre au mois de début.",
+   "education.certifications_other.required": "Veuillez préciser votre autre certification.",
+   "*.in": "Veuillez choisir une option de la liste."
   }
  },
  "errors": {
@@ -87,6 +141,10 @@
   "zh_TW": {
    "summary": "就快完成了，還有幾項需要您補充：",
    "titlePrefix": "請確認："
+  },
+  "fr": {
+   "summary": "Presque terminé. Quelques détails nécessitent encore votre attention :",
+   "titlePrefix": "Veuillez vérifier : "
   }
  },
  "options": {
@@ -159,6 +217,134 @@
    "1_3",
    "4_10",
    "over_10"
+  ],
+  "management_experience": [
+   "none",
+   "1_3",
+   "3_5",
+   "over_5"
+  ],
+  "work_fields": [
+   "education",
+   "medicine",
+   "nursing",
+   "social_work",
+   "counselling",
+   "law",
+   "accounting",
+   "human_resources",
+   "marketing",
+   "events",
+   "project_management",
+   "it",
+   "ai",
+   "web",
+   "graphic_design",
+   "video",
+   "translation",
+   "other"
+  ],
+  "education_levels": [
+   "high_school",
+   "college",
+   "university",
+   "masters",
+   "doctorate"
+  ],
+  "certifications": [
+   "pmp",
+   "capm",
+   "nurse",
+   "social_worker",
+   "teacher",
+   "accountant",
+   "lawyer",
+   "google",
+   "microsoft",
+   "ai",
+   "other"
+  ],
+  "skills": {
+   "administration": [
+    "word_processing",
+    "minutes",
+    "administration",
+    "official_writing"
+   ],
+   "project_management": [
+    "project_management",
+    "pmo",
+    "scrum",
+    "agile"
+   ],
+   "it": [
+    "systems_analysis",
+    "programming",
+    "websites",
+    "databases",
+    "security"
+   ],
+   "ai": [
+    "chatgpt",
+    "copilot",
+    "ai_agent",
+    "prompt_engineering",
+    "gemini"
+   ],
+   "design": [
+    "canva",
+    "photoshop",
+    "illustrator",
+    "video_editing"
+   ],
+   "media": [
+    "visual_design",
+    "canva",
+    "photoshop",
+    "illustrator",
+    "graphic_design",
+    "banners",
+    "posters",
+    "edm_design",
+    "video_editing",
+    "photography",
+    "videography"
+   ],
+   "marketing": [
+    "facebook",
+    "social_media",
+    "google_ads",
+    "seo",
+    "email_marketing",
+    "copywriting"
+   ],
+   "training": [
+    "course_design",
+    "teaching",
+    "materials",
+    "workshops"
+   ],
+   "medical": [
+    "physician",
+    "nursing",
+    "pharmacy",
+    "medical_technology",
+    "rehabilitation",
+    "counselling",
+    "public_health",
+    "long_term_care",
+    "social_welfare",
+    "medical_administration"
+   ]
+  },
+  "service_modes": [
+   "online",
+   "in_person",
+   "either"
+  ],
+  "form_slots": [
+   "morning",
+   "afternoon"
   ],
   "days": [
    "monday",
